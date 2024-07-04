@@ -17,9 +17,7 @@ const initialState: TasksState = {
 export const fetchTasksAsync = createAsyncThunk(
     'tasks/fetchTasks',
     async () => {
-        console.log("fetching tasks");
         const response = await fetchTasks();
-        console.log(`get response: ${response}`);
         return response;
     }
 );
@@ -31,16 +29,13 @@ export const tasksSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchTasksAsync.pending, (state) => {
-                console.log("pending");
                 state.status = Status.LOADING;
             })
             .addCase(fetchTasksAsync.fulfilled, (state, action) => {
                 state.status = Status.IDLE;
-                console.log(action.payload);
                 state.tasks = action.payload.tasks;
             })
             .addCase(fetchTasksAsync.rejected, (state) => {
-                console.log("rejected");
                 state.status = Status.FAILED;
             });
     },

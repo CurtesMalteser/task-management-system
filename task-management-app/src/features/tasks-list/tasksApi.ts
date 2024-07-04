@@ -7,7 +7,6 @@ function isTasks(obj: any): obj is Tasks {
   }
 
   return obj.tasks.every((task: any) => {
-    console.log("obj.tasks: ", task);
     return 'id' in task && typeof task.id === 'string' &&
       'title' in task && typeof task.title === 'string' &&
       'description' in task && typeof task.description === 'string' &&

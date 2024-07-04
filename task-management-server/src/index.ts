@@ -38,8 +38,6 @@ app.get('/api/tasks', (req, res) => {
         ]
     }
 
-    console.log(tasks);
-
   res.json(tasks);
 });
 
