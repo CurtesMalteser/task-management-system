@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { Task } from "../../../../lib/src/task";
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
@@ -41,7 +41,18 @@ export const tasksSlice = createSlice({
     },
 });
 
-export const selectTasks = (state: RootState) => state.tasks.tasks;
-export const selectStatus = (state: RootState) => state.tasks.status;
+export const statusSelector = (state: RootState) => state.tasks.status;
+export const todoTasksSelector = createSelector(
+    (state: RootState) => state.tasks.tasks,
+    (tasks) => tasks.filter(task => task.status === "open")
+);
+export const inProgressTasksSelector = createSelector(
+    (state: RootState) => state.tasks.tasks,
+    (tasks) => tasks.filter(task => task.status === "in-progress")
+);
+export const completedTasksSelector = createSelector(
+    (state: RootState) => state.tasks.tasks,
+    (tasks) => tasks.filter(task => task.status === "completed")
+);
 
 export default tasksSlice.reducer;

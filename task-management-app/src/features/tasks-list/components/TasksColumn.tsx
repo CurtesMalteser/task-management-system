@@ -8,7 +8,7 @@ function TasksColumn({ title, tasks, statusHandler }: { title: string, tasks: Ta
         <Col className="md-3">
             <h2>{title}</h2>
             {tasks.map((task) => (
-                <Card className="md-3" key={task.id}>
+                <Card key={task.id}>
                     <Card.Body>
                         <Card.Title>{task.title}</Card.Title>
                         <Card.Text>{task.description}</Card.Text>

@@ -34,6 +34,30 @@ app.get('/api/tasks', (req, res) => {
                 dueDate: 1632900000000,
                 priority: 'high',
                 status: 'completed'
+            },
+            {
+                id: '4',
+                title: 'Task 4',
+                description: 'Description 4',
+                dueDate: 1632900000000,
+                priority: 'high',
+                status: 'in-progress'
+            },
+            {
+                id: '5',
+                title: 'Task 5',
+                description: 'Description 5',
+                dueDate: 1632900000000,
+                priority: 'medium',
+                status: 'in-progress'
+            },
+            {
+                id: '6',
+                title: 'Task 6',
+                description: 'Description 6',
+                dueDate: 1632900000000,
+                priority: 'high',
+                status: 'completed'
             }
         ]
     }
