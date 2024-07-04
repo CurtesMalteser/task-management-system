@@ -1,8 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import { Tasks } from '../../lib/src/task';
 
 const app = express();
 const port = 5001; // default port to listen, setting to 5001 to avoid conflict with 3000 default React and 5000 already used by the Mac OS
+
+app.use(cors());
 
 // Define a route handler for the default home page
 app.get('/api/tasks', (req, res) => {

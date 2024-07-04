@@ -2,7 +2,7 @@
 // This will be used in the POST request to the server without id, timestamp and status.
 // If successful, the server will return the created task with the status, id and timestamp.
 // Default status will be open and not part of the request body as already specified.
-interface Task {
+export interface Task {
     id: string;
     title: string;
     description: string;
@@ -11,8 +11,6 @@ interface Task {
     status: 'open' | 'in-progress' | 'completed';
 }
 
-interface Tasks {
+export interface Tasks {
     tasks: Task[];
 }
-
-export { Task, Tasks };
