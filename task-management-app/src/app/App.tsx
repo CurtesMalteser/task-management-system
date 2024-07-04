@@ -7,7 +7,7 @@ import ErrorPage from '../features/error/ErrorPage';
 import ROUTES from '../constants/routes';
 import WorkInProgressError from '../features/error/WorkInProgressError';
 import HomeOutlet from '../features/home/HomeOutlet';
-import HomePage from '../features/home/HomePage';
+import TasksPage from '../features/tasks-list/TasksPage';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <HomeOutlet />,
     errorElement: <ErrorPage />,
     children: [
-      { path: ROUTES.HOME, element: <HomePage /> },
+      { path: ROUTES.HOME, element: <TasksPage /> },
       { path: ROUTES.DASHBOARD, element: <WorkInProgressError pageTitle='Dashboard'/> },
       { path: ROUTES.NEW_TASK, element: <WorkInProgressError pageTitle='New Task'/> },
 
