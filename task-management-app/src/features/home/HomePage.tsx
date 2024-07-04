@@ -8,7 +8,9 @@ import {
 import { Status } from "../../constants/Status";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
-import TasksColumn from "./components/TasksColumn";
+import Col from "react-bootstrap/esm/Col";
+import Card from "react-bootstrap/esm/Card";
+
 
 function HomePage() {
 
@@ -25,9 +27,21 @@ function HomePage() {
     <Container className="md-9">
       <h1>Home Page</h1>
       <Row>
-        <TasksColumn title="To Do" tasks={tasks.filter(task => task.status === "open")} statusHandler={({ id, status }) => console.log(`id: ${id}, status: ${status}`)} />
-        <TasksColumn title="In Progress" tasks={tasks.filter(task => task.status === "in-progress")} statusHandler={({ id, status }) => console.log(`id: ${id}, status: ${status}`)}/>
-        <TasksColumn title="Done" tasks={tasks.filter(task => task.status === "completed")} statusHandler={({ id, status }) => console.log(`id: ${id}, status: ${status}`)}/>
+        <Col>
+          {
+            status === Status.IDLE && tasks.map((task) => (
+              <Card key={task.id}>
+                <Card.Body>
+                  <Card.Title>{task.title}</Card.Title>
+                  <Card.Text>{task.description}</Card.Text>
+                  <Card.Text>{task.dueDate}</Card.Text>
+                  <Card.Text>{task.priority}</Card.Text>
+                  <Card.Text>{task.status}</Card.Text>
+                </Card.Body>
+              </Card>
+            ))
+          }
+        </Col>
       </Row>
       {status === Status.LOADING && <div>Loading...</div>}
       {status === Status.FAILED && <div>Failed...</div>}

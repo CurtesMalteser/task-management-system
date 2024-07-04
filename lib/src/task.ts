@@ -7,8 +7,8 @@ export interface Task {
     title: string;
     description: string;
     dueDate: number; // Unix timestamp
-    priority: 'low' | 'medium' | 'high';
-    status: 'open' | 'in-progress' | 'completed';
+    priority: 'low' | 'medium' | 'high'; // Low, Medium, High enum
+    status: 'open' | 'in-progress' | 'completed'; // Open, In_Progress, Completed enum
 }
 
 export interface Tasks {
