@@ -1,11 +1,7 @@
-// US#1: As a user, I want to create a new task with a title, description, due date, and
-// priority level (low, medium, high) so that I can organize my work effectively.
-// 2. US#2: As a user, I want to view a list of all my tasks, with options to sort by due
-// US#2: As a user, I want to view a list of all my tasks, with options to sort by due date,
-// priority, and creation date, so that I can prioritize my work.
-// US#3: As a user, I want to edit a task’s details, including the ability to change its status
-// to "in-progress" or "completed", so that I can keep my task information up-to-date.
-// US#4: As a user, I want to delete a task so that I can remove tasks that are no longer
+// I'll need a TaskRequest interface to define the shape of the request body for creating a new task.
+// This will be used in the POST request to the server without id, timestamp and status.
+// If successful, the server will return the created task with the status, id and timestamp.
+// Default status will be open and not part of the request body as already specified.
 interface Task {
     id: string;
     title: string;
