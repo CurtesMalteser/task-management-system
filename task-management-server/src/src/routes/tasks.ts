@@ -70,8 +70,6 @@ routes.get('/tasks', (req, res) => {
 
 routes.post('/task', (req, res) => {
     const newTask = req.body;
-    console.log(`incoming task: ${newTask.title}`);
-
 
     const storedTask: Task = {
         id: '7',
@@ -82,8 +80,24 @@ routes.post('/task', (req, res) => {
         status: 'open'
     }
 
+    res.status(201).json(storedTask);
 
-    console.log(`task with id: ${storedTask.id} created`);
+});
+
+routes.put('/task/:id', (req, res) => {
+    const { id } = req.params;
+
+    const putTask = req.body;
+
+    const storedTask: Task = {
+        id: id,
+        title: putTask.title,
+        description: putTask.description,
+        dueDate: putTask.dueDate,
+        priority: putTask.priority,
+        status: putTask.status
+    }
+
     res.status(201).json(storedTask);
 
 });
