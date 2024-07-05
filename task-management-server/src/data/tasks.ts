@@ -69,7 +69,7 @@ export function addTask(taskData: Omit<Task, 'id' | 'status'>): Task {
 
     const id = (Object.keys(tasks).length + 1).toString();
 
-    const newTask : Task = {
+    const newTask: Task = {
         id: id,
         status: 'open',
         ...taskData,
@@ -78,4 +78,21 @@ export function addTask(taskData: Omit<Task, 'id' | 'status'>): Task {
     tasks[id] = newTask;
 
     return newTask;
+}
+
+export function updateTask(id: string, taskData: Omit<Task, 'id'>): Task | null {
+
+    if (tasks.hasOwnProperty(id)) {
+
+        const updatedTask: Task = {
+            id: id,
+            ...taskData,
+        }
+
+        tasks[id] = updatedTask;
+
+        return updatedTask;
+    } else {
+        return null;
+    }
 }

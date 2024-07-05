@@ -7,16 +7,17 @@ import {
     getTasks,
     getTask,
     addTask,
+    updateTask,
 } from '../data/tasks';
 
 const routes = express.Router();
 
-// Define a route handler for the default home page
-routes.get('/', (req, res) => {
+// Define a route handler for the purpose of checking if the API is running
+routes.get('/', (_req, res) => {
     res.send('API is running');
 });
 
-routes.get('/tasks', (req, res) => {
+routes.get('/tasks', (_req, res) => {
     const tasks: Tasks = getTasks();
     res.json(tasks);
 });
@@ -33,16 +34,13 @@ routes.put('/task/:id', (req, res) => {
 
     const putTask = req.body;
 
-    const storedTask: Task = {
-        id: id,
-        title: putTask.title,
-        description: putTask.description,
-        dueDate: putTask.dueDate,
-        priority: putTask.priority,
-        status: putTask.status
-    }
+    const storedTask: Task | null = updateTask(id, putTask);
 
-    res.status(201).json(storedTask);
+    if (storedTask !== null) {
+        res.status(201).json(storedTask);
+    } else {
+        res.status(404).json({ message: 'Task not found' });
+    }
 
 });
 
@@ -61,7 +59,7 @@ routes.get('/task/:id', (req, res) => {
     const task = getTask(id);
 
     if (task) {
-           res.status(200).json(task);
+        res.status(200).json(task);
     } else {
         res.status(404).json({ message: 'Task not found' });
     }
