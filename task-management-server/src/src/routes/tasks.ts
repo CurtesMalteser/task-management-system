@@ -102,4 +102,13 @@ routes.put('/task/:id', (req, res) => {
 
 });
 
+routes.delete('/task/:id', (req, res) => {
+    const { id } = req.params;
+
+    console.log(`Deleting task with id: ${id}`);
+
+    res.status(204).send();
+
+});
+
 export default routes;
