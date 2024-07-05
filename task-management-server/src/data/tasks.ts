@@ -1,3 +1,4 @@
+import { stat } from 'fs';
 import {
     Task,
     Tasks,
@@ -62,4 +63,19 @@ export function getTasks(): Tasks {
 
 export function getTask(id: string): Task {
     return tasks[id];
+}
+
+export function addTask(taskData: Omit<Task, 'id' | 'status'>): Task {
+
+    const id = (Object.keys(tasks).length + 1).toString();
+
+    const newTask : Task = {
+        id: id,
+        status: 'open',
+        ...taskData,
+    }
+
+    tasks[id] = newTask;
+
+    return newTask;
 }

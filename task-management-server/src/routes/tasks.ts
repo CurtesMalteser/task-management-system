@@ -6,6 +6,7 @@ import {
 import {
     getTasks,
     getTask,
+    addTask,
 } from '../data/tasks';
 
 const routes = express.Router();
@@ -21,17 +22,8 @@ routes.get('/tasks', (req, res) => {
 });
 
 routes.post('/task', (req, res) => {
-    const newTask = req.body;
-
-    const storedTask: Task = {
-        id: '7',
-        title: newTask.title,
-        description: newTask.description,
-        dueDate: newTask.dueDate,
-        priority: newTask.priority,
-        status: 'open'
-    }
-
+    const taskData = req.body;
+    const storedTask: Task = addTask(taskData);
     res.status(201).json(storedTask);
 
 });
