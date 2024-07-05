@@ -1,5 +1,8 @@
 import express from 'express';
-import { Tasks } from '../../../../lib/src/task';
+import {
+    Tasks,
+    Task,
+} from '../../../../lib/src/task';
 
 const routes = express.Router();
 
@@ -62,7 +65,27 @@ routes.get('/tasks', (req, res) => {
         ]
     }
 
-  res.json(tasks);
+    res.json(tasks);
+});
+
+routes.post('/task', (req, res) => {
+    const newTask = req.body;
+    console.log(`incoming task: ${newTask.title}`);
+
+
+    const storedTask: Task = {
+        id: '7',
+        title: newTask.title,
+        description: newTask.description,
+        dueDate: newTask.dueDate,
+        priority: newTask.priority,
+        status: 'open'
+    }
+
+
+    console.log(`task with id: ${storedTask.id} created`);
+    res.status(201).json(storedTask);
+
 });
 
 export default routes;
