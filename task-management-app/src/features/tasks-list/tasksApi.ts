@@ -16,7 +16,7 @@ function isTasks(obj: any): obj is Tasks {
   });
 }
 
-export function fetchTasks(): Promise<Tasks> {
+export async function fetchTasks(): Promise<Tasks> {
   return fetch(URL.TASKS)
     .then(response => response.json())
     .then(data => {
