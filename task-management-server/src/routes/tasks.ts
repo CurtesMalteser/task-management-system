@@ -8,6 +8,7 @@ import {
     getTask,
     addTask,
     updateTask,
+    deleteTask,
 } from '../data/tasks';
 
 const routes = express.Router();
@@ -47,9 +48,13 @@ routes.put('/task/:id', (req, res) => {
 routes.delete('/task/:id', (req, res) => {
     const { id } = req.params;
 
-    console.log(`Deleting task with id: ${id}`);
+    const taskDeleted = deleteTask(id);
 
-    res.status(204).send();
+    if (taskDeleted) {
+        res.status(204).send()
+    } else {
+        res.status(404).json({ message: 'Task not found' });
+    }
 
 });
 

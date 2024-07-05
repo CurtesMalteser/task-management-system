@@ -1,4 +1,3 @@
-import { stat } from 'fs';
 import {
     Task,
     Tasks,
@@ -94,5 +93,14 @@ export function updateTask(id: string, taskData: Omit<Task, 'id'>): Task | null 
         return updatedTask;
     } else {
         return null;
+    }
+}
+
+export function deleteTask(id: string): boolean {
+    if (tasks.hasOwnProperty(id)) {
+        delete tasks[id];
+        return true;
+    } else {
+        return false;
     }
 }
