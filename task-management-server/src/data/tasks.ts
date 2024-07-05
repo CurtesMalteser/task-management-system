@@ -59,3 +59,7 @@ export function getTasks(): Tasks {
         tasks: Object.values(tasks)
     }
 }
+
+export function getTask(id: string): Task {
+    return tasks[id];
+}

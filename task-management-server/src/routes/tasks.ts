@@ -5,6 +5,7 @@ import {
 } from '../../../lib/src/task';
 import {
     getTasks,
+    getTask,
 } from '../data/tasks';
 
 const routes = express.Router();
@@ -59,6 +60,19 @@ routes.delete('/task/:id', (req, res) => {
     console.log(`Deleting task with id: ${id}`);
 
     res.status(204).send();
+
+});
+
+routes.get('/task/:id', (req, res) => {
+    const { id } = req.params;
+
+    const task = getTask(id);
+
+    if (task) {
+           res.status(200).json(task);
+    } else {
+        res.status(404).json({ message: 'Task not found' });
+    }
 
 });
 
