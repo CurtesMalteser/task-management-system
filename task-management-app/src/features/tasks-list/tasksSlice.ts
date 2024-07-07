@@ -44,14 +44,18 @@ export const tasksSlice = createSlice({
 });
 
 export const statusSelector = (state: RootState) => state.tasks.status;
+export const tasksSelector = (state: RootState) => state.tasks.tasks;
+
 export const todoTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,
     (tasks) => tasks.filter(task => task.status === "open")
 );
+
 export const inProgressTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,
     (tasks) => tasks.filter(task => task.status === "in-progress")
 );
+
 export const completedTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,
     (tasks) => tasks.filter(task => task.status === "completed")
