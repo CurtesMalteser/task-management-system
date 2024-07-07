@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownButton, Nav, Navbar } from 'react-bootstrap';
+import { setFilterTasksByStatus } from '../tasksSlice';
+import { useAppDispatch } from '../../../app/hooks';
 
 const Filters = () => {
+
+    const dispatch = useAppDispatch();
     const [filter, setFilter] = useState('all');
     const [sort, setSort] = useState('due-date');
 
     const handleFilterSelect = (eventKey: React.SetStateAction<string | null>) => {
+        dispatch(setFilterTasksByStatus(eventKey?.toString() || 'all'));
         setFilter(eventKey?.toString() || 'all');
     };
 

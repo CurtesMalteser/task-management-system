@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
     fetchTasksAsync,
     statusSelector as taskStatus,
-    tasksSelector,
+    filteredTasksSelector,
 } from "../tasksSlice";
 import { useEffect } from "react";
 import { Status } from "../../../constants/Status";
@@ -12,7 +12,7 @@ import Filters from "./Filters";
 
 function TasksList() {
     const dispatch = useAppDispatch();
-    const tasks = useSelector(tasksSelector);
+    const tasks = useSelector(filteredTasksSelector);
     const status = useAppSelector(taskStatus);
 
     useEffect(() => {

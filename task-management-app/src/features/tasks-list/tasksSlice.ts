@@ -1,17 +1,26 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { Task } from "../../../../lib/src/task";
+import {
+    Task,
+} from "../../../../lib/src/task";
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
 import { RootState } from '../../app/store';
 
+export enum TaskStatus {
+    IN_PROGRESS = 'in-progress',
+    COMPLETED = 'completed',
+}
+
 interface TasksState {
     tasks: Task[];
     status: Status;
+    taskStatusFilter: TaskStatus | null;
 }
 
 const initialState: TasksState = {
     tasks: [],
     status: Status.IDLE,
+    taskStatusFilter: null,
 };
 
 // If there's time don't fetch if the data is already in the store
@@ -27,7 +36,20 @@ export const fetchTasksAsync = createAsyncThunk(
 export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
-    reducers: {},
+    reducers: {
+        setFilterTasksByStatus: (state, action) => {
+            switch (action.payload) {
+                case 'in-progress':
+                    state.taskStatusFilter = TaskStatus.IN_PROGRESS;
+                    break;
+                case 'completed':
+                    state.taskStatusFilter = TaskStatus.COMPLETED;
+                    break;
+                default:
+                    state.taskStatusFilter = null;
+            }
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchTasksAsync.pending, (state) => {
@@ -43,8 +65,21 @@ export const tasksSlice = createSlice({
     },
 });
 
+export const { setFilterTasksByStatus } = tasksSlice.actions;
+
 export const statusSelector = (state: RootState) => state.tasks.status;
-export const tasksSelector = (state: RootState) => state.tasks.tasks;
+
+export const filteredTasksSelector = createSelector(
+    (state: RootState) => state.tasks.tasks,
+    (state: RootState) => state.tasks.taskStatusFilter,
+    (tasks, taskStatusFilter) => {
+        if (taskStatusFilter) {
+            return tasks.filter(task => task.status.toLocaleLowerCase() === taskStatusFilter.toLocaleLowerCase());
+        } else {
+            return tasks;
+        }
+    }
+);
 
 export const todoTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,
