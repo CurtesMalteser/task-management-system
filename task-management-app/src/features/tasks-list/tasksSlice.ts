@@ -1,8 +1,17 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { Task } from "task-management-lib/lib/task";
+import { 
+    Task,
+    Priority,
+ } from "task-management-lib/lib/task";
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
 import { RootState } from '../../app/store';
+
+const priorityOrder: { [key in Priority]: number } = {
+    [Priority.HIGH]: 3,
+    [Priority.MEDIUM]: 2,
+    [Priority.LOW]: 1,
+};
 
 export enum TaskStatus {
     IN_PROGRESS = 'in-progress',
@@ -15,12 +24,6 @@ export enum Sort {
     PRIORITY = 'priority',
 }
 
-export const priorityOrder: { [key in string]: number } = {
-    ['low']: 3,
-    ['medium']: 2,
-    ['high']: 1,
-};
-
 interface TasksState {
     tasks: Task[];
     status: Status;
@@ -32,7 +35,7 @@ const initialState: TasksState = {
     tasks: [],
     status: Status.IDLE,
     taskStatusFilter: null,
-    sortBy: Sort.PRIORITY,
+    sortBy: Sort.DUE_DATE,
 };
 
 // If there's time don't fetch if the data is already in the store
@@ -102,9 +105,10 @@ export const filteredTasksSelector = createSelector(
                     const priorityB = priorityOrder[b.priority];
 
                     if (priorityA === priorityB) {
-                        return a.dueDate - b.creationDate;
+                        return priorityB - priorityA && a.dueDate - b.creationDate;
                     }
-                    return priorityA - priorityB;
+
+                    return priorityB - priorityA;
 
                 });
             default:

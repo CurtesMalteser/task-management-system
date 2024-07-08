@@ -6,6 +6,12 @@ export enum Priority {
     HIGH = 'high',
 }
 
+export const priorityOrder: { [key in Priority]: number } = {
+    [Priority.HIGH]: 3,
+    [Priority.MEDIUM]: 2,
+    [Priority.LOW]: 1,
+};
+
 export enum Status {
     OPEN = 'open',
     IN_PROGRESS = 'in-progress',
