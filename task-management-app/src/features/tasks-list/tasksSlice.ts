@@ -11,16 +11,30 @@ export enum TaskStatus {
     COMPLETED = 'completed',
 }
 
+export enum Sort {
+    CREATION_DATE = 'creationDate',
+    DUE_DATE = 'dueDate',
+    PRIORITY = 'priority',
+}
+
+export const priorityOrder: { [key in string]: number } = {
+    ['low']: 3,
+    ['medium']: 2,
+    ['high']: 1,
+};
+
 interface TasksState {
     tasks: Task[];
     status: Status;
     taskStatusFilter: TaskStatus | null;
+    sortBy: Sort;
 }
 
 const initialState: TasksState = {
     tasks: [],
     status: Status.IDLE,
     taskStatusFilter: null,
+    sortBy: Sort.PRIORITY,
 };
 
 // If there's time don't fetch if the data is already in the store
@@ -72,11 +86,31 @@ export const statusSelector = (state: RootState) => state.tasks.status;
 export const filteredTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,
     (state: RootState) => state.tasks.taskStatusFilter,
-    (tasks, taskStatusFilter) => {
-        if (taskStatusFilter) {
-            return tasks.filter(task => task.status.toLocaleLowerCase() === taskStatusFilter.toLocaleLowerCase());
-        } else {
-            return tasks;
+    (state: RootState) => state.tasks.sortBy,
+    (tasks, taskStatusFilter, sortBy) => {
+
+        const filteredTasks = taskStatusFilter
+            ? tasks.filter(task => task.status.toLocaleLowerCase() === taskStatusFilter.toLocaleLowerCase())
+            : tasks;
+
+        switch (sortBy) {
+            case Sort.CREATION_DATE:
+                return [...filteredTasks].sort((a: Task, b: Task) => a.creationDate - b.creationDate);
+            case Sort.DUE_DATE:
+                return [...filteredTasks].sort((a: Task, b: Task) => a.dueDate - b.dueDate);
+            case Sort.PRIORITY:
+                return [...filteredTasks].sort((a: Task, b: Task) => {
+                    const priorityA = priorityOrder[a.priority];
+                    const priorityB = priorityOrder[b.priority];
+
+                    if (priorityA === priorityB) {
+                        return a.dueDate - b.creationDate;
+                    }
+                    return priorityA - priorityB;
+
+                });
+            default:
+                return filteredTasks;
         }
     }
 );
