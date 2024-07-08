@@ -1,7 +1,7 @@
 import {
     Task,
     Tasks,
-} from '../../../lib/src/task';
+} from 'task-management-lib/src/task';
 
 const tasks: { [key: string]: Task } = {
     1: {

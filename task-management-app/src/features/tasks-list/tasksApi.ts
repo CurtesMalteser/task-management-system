@@ -1,4 +1,4 @@
-import { Tasks } from "../../../../lib/src/task";
+import { Tasks } from "task-management-lib/src/task";
 import URL from '../../constants/url';
 
 function isTasks(obj: any): obj is Tasks {
