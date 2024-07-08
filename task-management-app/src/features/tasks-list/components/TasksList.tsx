@@ -8,7 +8,7 @@ import {
 import { useEffect } from "react";
 import { Status } from "../../../constants/Status";
 import Filters from "./Filters";
-
+import formatDate from "../../../utils/date";
 
 function TasksList() {
     const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ function TasksList() {
             <Filters />
             {tasks.map((task) => (
                 <div key={task.id}>
-                    {task.id} {task.title} {task.priority} {task.status}
+                    {task.id} | {task.title} | {task.priority} | {task.status} | {formatDate(task.dueDate)} | {formatDate(task.creationDate)}
                 </div>
             ))}
         </>
