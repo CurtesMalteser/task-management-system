@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import {
-    Task,
-} from "../../../../lib/src/task";
+import { Task } from "task-management-lib/lib/task";
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
 import { RootState } from '../../app/store';

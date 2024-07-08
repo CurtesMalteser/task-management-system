@@ -1,7 +1,7 @@
 import Col from "react-bootstrap/esm/Col";
 import Card from "react-bootstrap/esm/Card";
 import Button from "react-bootstrap/esm/Button";
-import { Task } from "../../../../../lib/src/task";
+import { Task } from "task-management-lib/lib/task";
 
 function TasksColumn({ title, tasks, statusHandler }: { title: string, tasks: Task[], statusHandler: ({ id, status }: { id: string, status: string }) => void }) {
     return (
