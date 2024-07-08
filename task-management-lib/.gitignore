@@ -9,8 +9,8 @@
 /coverage
 
 # Ignore build output directories
-lib/
-dist/
+/lib
+/dist
 
 # production
 /build

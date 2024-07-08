@@ -2,7 +2,7 @@ import express from 'express';
 import {
     Tasks,
     Task,
-} from 'task-management-lib/src/task';
+} from 'task-management-lib/lib/task';
 import {
     getTasks,
     getTask,
