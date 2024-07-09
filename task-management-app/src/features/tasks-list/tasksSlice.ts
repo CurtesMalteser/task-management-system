@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { 
+import {
     Task,
     Priority,
     Status as TaskStatus,
- } from "task-management-lib/lib/task";
+} from "task-management-lib/lib/task";
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
 import { RootState } from '../../app/store';
@@ -60,6 +60,9 @@ export const tasksSlice = createSlice({
                     state.taskStatusFilter = null;
             }
         },
+        setSortTasks: (state, action) => {
+            state.sortBy = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -76,7 +79,10 @@ export const tasksSlice = createSlice({
     },
 });
 
-export const { setFilterTasksByStatus } = tasksSlice.actions;
+export const {
+    setFilterTasksByStatus,
+    setSortTasks,
+} = tasksSlice.actions;
 
 export const statusSelector = (state: RootState) => state.tasks.status;
 
