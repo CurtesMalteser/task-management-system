@@ -2,6 +2,7 @@ import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import { 
     Task,
     Priority,
+    Status as TaskStatus,
  } from "task-management-lib/lib/task";
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
@@ -12,11 +13,6 @@ const priorityOrder: { [key in Priority]: number } = {
     [Priority.MEDIUM]: 2,
     [Priority.LOW]: 1,
 };
-
-export enum TaskStatus {
-    IN_PROGRESS = 'in-progress',
-    COMPLETED = 'completed',
-}
 
 export enum Sort {
     CREATION_DATE = 'creationDate',

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Dropdown, DropdownButton, Nav, Navbar } from 'react-bootstrap';
 import { setFilterTasksByStatus } from '../tasksSlice';
 import { useAppDispatch } from '../../../app/hooks';
+import { Status as TaskStatus } from "task-management-lib/lib/task";
 
 const Filters = () => {
 
@@ -9,8 +10,8 @@ const Filters = () => {
     const [filter, setFilter] = useState('all');
     const [sort, setSort] = useState('due-date');
 
-    const handleFilterSelect = (eventKey: React.SetStateAction<string | null>) => {
-        dispatch(setFilterTasksByStatus(eventKey?.toString() || 'all'));
+    const handleFilterSelect = (eventKey: TaskStatus | null) => {
+        dispatch(setFilterTasksByStatus(eventKey));
         setFilter(eventKey?.toString() || 'all');
     };
 
@@ -26,12 +27,11 @@ const Filters = () => {
                     <DropdownButton
                         id="filter-tasks-dropdown"
                         title={`Filter: ${filter}`}
-                        onSelect={handleFilterSelect}
                         className="mr-2"
                     >
-                        <Dropdown.Item eventKey="all">All</Dropdown.Item>
-                        <Dropdown.Item eventKey="in-progress">In Progress</Dropdown.Item>
-                        <Dropdown.Item eventKey="completed">Completed</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.IN_PROGRESS)} eventKey="in-progress">In Progress</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.COMPLETED)} eventKey="completed">Completed</Dropdown.Item>
                     </DropdownButton>
                     <DropdownButton
                         id="sort-tasks-dropdown"
