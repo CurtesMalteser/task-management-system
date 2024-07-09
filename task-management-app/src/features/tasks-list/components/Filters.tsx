@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import { Dropdown, DropdownButton, Nav, Navbar } from 'react-bootstrap';
 import {
     setFilterTasksByStatus,
     setSortTasks,
     Sort,
+    sortSelector,
+    taskStatusFilterSelector,
 } from '../tasksSlice';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Status as TaskStatus } from "task-management-lib/lib/task";
 
 // #region utils
@@ -36,16 +37,14 @@ const sortTasksToString = (sort: Sort) => {
 const Filters = () => {
 
     const dispatch = useAppDispatch();
-    const [filter, setFilter] = useState(taskStatusToString(null));
-    const [sort, setSort] = useState(sortTasksToString(Sort.DUE_DATE));
+    const filterBy = useAppSelector(taskStatusFilterSelector);
+    const sortBy = useAppSelector(sortSelector);
 
     const handleFilterSelect = (status: TaskStatus | null) => {
         dispatch(setFilterTasksByStatus(status));
-        setFilter(taskStatusToString(status));
     };
 
     const handleSortSelect = (sort: Sort) => {
-        setSort(sortTasksToString(sort));
         dispatch(setSortTasks(sort));
     };
 
@@ -56,7 +55,7 @@ const Filters = () => {
                 <Nav className="mr-auto">
                     <DropdownButton
                         id="filter-tasks-dropdown"
-                        title={`Filter: ${filter}`}
+                        title={`Filter: ${taskStatusToString(filterBy)}`}
                         className="mr-2"
                     >
                         <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
@@ -65,7 +64,7 @@ const Filters = () => {
                     </DropdownButton>
                     <DropdownButton
                         id="sort-tasks-dropdown"
-                        title={`Sort: ${sort}`}
+                        title={`Sort: ${sortTasksToString(sortBy)}`}
                     >
                         <Dropdown.Item onClick={() => handleSortSelect(Sort.DUE_DATE)} eventKey="due-date">Due Date</Dropdown.Item>
                         <Dropdown.Item onClick={() => handleSortSelect(Sort.PRIORITY)} eventKey="priority">Priority</Dropdown.Item>

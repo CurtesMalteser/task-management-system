@@ -85,6 +85,8 @@ export const {
 } = tasksSlice.actions;
 
 export const statusSelector = (state: RootState) => state.tasks.status;
+export const taskStatusFilterSelector = (state: RootState) => state.tasks.taskStatusFilter;
+export const sortSelector = (state: RootState) => state.tasks.sortBy;
 
 export const filteredTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,

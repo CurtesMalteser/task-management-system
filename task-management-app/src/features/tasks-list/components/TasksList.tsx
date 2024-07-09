@@ -12,7 +12,7 @@ import formatDate from "../../../utils/date";
 
 function TasksList() {
     const dispatch = useAppDispatch();
-    const tasks = useSelector(filteredTasksSelector);
+    const tasks = useAppSelector(filteredTasksSelector);
     const status = useAppSelector(taskStatus);
 
     useEffect(() => {
