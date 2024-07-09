@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Dropdown, DropdownButton, Nav, Navbar } from 'react-bootstrap';
 import {
     setFilterTasksByStatus,
@@ -8,19 +8,44 @@ import {
 import { useAppDispatch } from '../../../app/hooks';
 import { Status as TaskStatus } from "task-management-lib/lib/task";
 
+// #region utils
+const taskStatusToString = (status: TaskStatus | null) => {
+    switch (status) {
+        case TaskStatus.IN_PROGRESS:
+            return 'In Progress';
+        case TaskStatus.COMPLETED:
+            return 'Completed';
+        default:
+            return 'All';
+    }
+};
+
+const sortTasksToString = (sort: Sort) => {
+    switch (sort) {
+        case Sort.DUE_DATE:
+            return 'Due Date';
+        case Sort.PRIORITY:
+            return 'Priority';
+        case Sort.CREATION_DATE:
+            return 'Creation Date';
+    }
+};
+
+// #endregion utils
+
 const Filters = () => {
 
     const dispatch = useAppDispatch();
-    const [filter, setFilter] = useState('all');
-    const [sort, setSort] = useState('due-date');
+    const [filter, setFilter] = useState(taskStatusToString(null));
+    const [sort, setSort] = useState(sortTasksToString(Sort.DUE_DATE));
 
-    const handleFilterSelect = (eventKey: TaskStatus | null) => {
-        dispatch(setFilterTasksByStatus(eventKey));
-        setFilter(eventKey?.toString() || 'all');
+    const handleFilterSelect = (status: TaskStatus | null) => {
+        dispatch(setFilterTasksByStatus(status));
+        setFilter(taskStatusToString(status));
     };
 
     const handleSortSelect = (sort: Sort) => {
-        setSort(sort.toString() || 'due-date');
+        setSort(sortTasksToString(sort));
         dispatch(setSortTasks(sort));
     };
 
