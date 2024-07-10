@@ -2,11 +2,15 @@ import Form from 'react-bootstrap/esm/Form';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+interface TaskDatePickerProps {
+    selected: Date | null;
+    handleDateChange: (date: Date | null) => void;
+}
 
-function TaskDatePicker({ selected, handleDateChange } : { selected: Date | null, handleDateChange: (date: Date | null) => void }) {
+function TaskDatePicker({ selected, handleDateChange } : TaskDatePickerProps) {
     return (
         <Form.Group controlId="dueDate">
-            <Form.Label>Due Date</Form.Label>
+            <Form.Label className='me-2'>Due Date:</Form.Label>
             <DatePicker
                 selected={selected}
                 onChange={handleDateChange}

@@ -6,6 +6,7 @@ export enum Priority {
     HIGH = 'high',
 }
 
+// Delete and wait to update the release when TaskRequest is added
 export const priorityOrder: { [key in Priority]: number } = {
     [Priority.HIGH]: 3,
     [Priority.MEDIUM]: 2,

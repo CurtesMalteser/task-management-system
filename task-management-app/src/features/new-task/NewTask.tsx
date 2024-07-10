@@ -7,9 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import TitleFormGroup from './components/TitleFormGroup';
 import DescriptionFormGroup from './components/DescriptionFormGroup';
 import TaskDatePicker from './components/TaskDatePicker';
+import PriorityFormSelect from './components/PriorityFormSelect';
+import { Priority } from 'task-management-lib/lib/task';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
 
 function NewTask() {
 
+    const navigate = useNavigate();
+
+    const [priority, setPriority] = useState<Priority>(Priority.LOW);
     const [dueDate, setDueDate] = useState<Date | null>(new Date());
 
     // {
@@ -19,24 +26,40 @@ function NewTask() {
     //     priority: Priority.HIGH,
     // }
 
-    const navigate = useNavigate();
-
     return (
         <Container className="md-8">
             <h1>Hello New Task Component</h1>
             <Form /*onSubmit={handleSubmit}*/>
                 <TitleFormGroup />
                 <DescriptionFormGroup />
-                <TaskDatePicker
-                    selected={dueDate}
-                    handleDateChange={setDueDate}
-                />
+                <Row className='mb-3'>
+                    <Col>
+                        <PriorityFormSelect
+                            value={priority}
+                            onChange={setPriority}
+                        />
+                    </Col>
+                    <Col>
+                        <TaskDatePicker
+                            selected={dueDate}
+                            handleDateChange={setDueDate}
+                        />
+                    </Col>
+                </Row>
+
+
                 <>
                     <Button as="input"
                         type="submit"
                         variant="primary"
                         value="Save"
-                        onClick={() => console.log(`⌛️ Due Date: ${dueDate}`)}
+                        onClick={() => {
+                            console.group('✅ Task Details');
+                            console.log(`🔥 Priority: ${priority}`)
+                            console.log(`⌛️ Due Date: ${dueDate}`)
+                            console.groupEnd();
+                        }
+                        }
                     />
                     {' '} {/* Add a space between the buttons */}
                     <Button
