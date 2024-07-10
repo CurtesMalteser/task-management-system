@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
     fetchTasksAsync,

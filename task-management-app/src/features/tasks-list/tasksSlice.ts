@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
+import {
+    createAsyncThunk,
+    createSelector,
+    createSlice,
+} from '@reduxjs/toolkit';
 import {
     Task,
     Priority,

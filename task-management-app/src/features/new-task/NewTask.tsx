@@ -8,11 +8,23 @@ import TitleFormGroup from './components/TitleFormGroup';
 import DescriptionFormGroup from './components/DescriptionFormGroup';
 import TaskDatePicker from './components/TaskDatePicker';
 import PriorityFormSelect from './components/PriorityFormSelect';
-import { Priority } from 'task-management-lib/lib/task';
+import { Priority, Task } from 'task-management-lib/lib/task';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../app/hooks';
+import {
+    postTaskAsync,
+    statusSelector as postTaskStatusSelector,
+} from './newTaskSlice';
+import { Status } from '../../constants/Status';
 
 function NewTask() {
+
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(postTaskStatusSelector);
 
     const navigate = useNavigate();
 
@@ -23,13 +35,19 @@ function NewTask() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.group('✅ Task Details');
-        console.log(`🔥 Title: ${title}`);
-        console.log(`📝 Description: ${description}`);
-        console.log(`🔥 Priority: ${priority}`);
-        console.log(`⌛️ Due Date: ${dueDate}`);
-        console.groupEnd();
+
+        dispatch(postTaskAsync({
+            title,
+            description,
+            priority,
+            dueDate: dueDate ? dueDate.getTime() : 0,
+        })).then((response) => {
+            response.payload && console.log(`✅ Task created: ${(response.payload as Task).title}`); 
+        });
     };
+
+    if (status === Status.LOADING) return (<div>Loading...</div>);
+    if (status === Status.FAILED) return (<div>Failed...</div>);
 
     return (
         <Container className="md-8">
