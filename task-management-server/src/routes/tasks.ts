@@ -2,6 +2,7 @@ import express from 'express';
 import {
     Tasks,
     Task,
+    TaskRequest,
 } from 'task-management-lib/lib/task';
 import {
     getTasks,
@@ -9,6 +10,7 @@ import {
     addTask,
     updateTask,
     deleteTask,
+    validateTaskFields,
 } from '../data/tasks';
 
 const routes = express.Router();
@@ -24,7 +26,15 @@ routes.get('/tasks', (_req, res) => {
 });
 
 routes.post('/task', (req, res) => {
-    const taskData = req.body;
+
+    const taskData: TaskRequest = req.body;
+
+    const missingFields = validateTaskFields(taskData);
+
+    if (missingFields) {
+      return res.status(400).send(`Missing required fields: ${missingFields}`);
+    }
+
     const storedTask: Task = addTask(taskData);
     res.status(201).json(storedTask);
 

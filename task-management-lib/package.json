@@ -1,6 +1,6 @@
 {
   "name": "task-management-lib",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Task management library to share between projects",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,5 +10,8 @@
   },
   "scripts": {
     "build": "tsc"
+  },
+  "dependencies": {
+    "task-management-lib": "file:task-management-lib-0.0.3.tgz"
   }
 }

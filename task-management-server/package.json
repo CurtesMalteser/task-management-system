@@ -12,7 +12,7 @@
         "cors": "^2.8.5",
         "express": "^4.19.2",
         "express-cors": "^0.0.3",
-        "task-management-lib": "file:../task-management-lib/task-management-lib-0.0.2.tgz"
+        "task-management-lib": "file:../task-management-lib/task-management-lib-0.0.3.tgz"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",

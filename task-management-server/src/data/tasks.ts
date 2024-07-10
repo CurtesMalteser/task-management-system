@@ -3,6 +3,7 @@ import {
     Status,
     Task,
     Tasks,
+    TaskRequest,
 } from "task-management-lib/lib/task";
 
 const tasks: { [key: string]: Task } = {
@@ -72,15 +73,32 @@ export function getTask(id: string): Task {
     return tasks[id];
 }
 
-export function addTask(taskData: Omit<Task, 'id' | 'status' | 'creationDate'>): Task {
+const isValidPriority =(value: any): value is Priority  =>  Object.values(Priority).includes(value);
+
+
+export function validateTaskFields(task: TaskRequest) {
+    const missingFields = [];
+    if (!task.title) missingFields.push('title');
+    if (!task.description) missingFields.push('description');
+    if (typeof task.dueDate !== 'number') missingFields.push('dueDate');
+    if (!isValidPriority(task.priority)) missingFields.push('priority');
+  
+    if (missingFields.length > 0) {
+      return `Missing required fields: ${missingFields.join(', ')}`;
+    }
+    // Proceed with main logic if no fields are missing
+    return null;
+  }
+
+  export function addTask(taskData: TaskRequest): Task {
 
     const id = (Object.keys(tasks).length + 1).toString();
-
+    
     const newTask: Task = {
+        ...taskData,
         id: id,
         status: Status.OPEN,
         creationDate: Date.now(),
-        ...taskData,
     }
 
     tasks[id] = newTask;
