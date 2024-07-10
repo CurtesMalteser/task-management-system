@@ -1,12 +1,15 @@
 import Form from 'react-bootstrap/esm/Form';
+import { TextInputProps } from './inputProps';
 
-function DescriptionFormGroup() {
+function DescriptionFormGroup({ value, onChange }: TextInputProps) {
     return (
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description:</Form.Label>
             <Form.Control type="text"
                 placeholder="Please describe the task."
                 required
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
                 onInvalid={(e) => { e.currentTarget.setCustomValidity('Please fill the Task Description.') }}
                 onInput={(e) => { e.currentTarget.setCustomValidity('') }}
             />

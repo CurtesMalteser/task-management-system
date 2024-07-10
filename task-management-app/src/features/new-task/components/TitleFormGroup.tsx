@@ -1,12 +1,15 @@
 import Form from 'react-bootstrap/esm/Form';
+import { TextInputProps } from './inputProps';
 
-function TitleFormGroup() {
+function TitleFormGroup({value, onChange}: TextInputProps) {
     return (
         <Form.Group className="mb-3">
             <Form.Label>Title:</Form.Label>
             <Form.Control type="text"
                 placeholder="Please fill in the task title."
                 required
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
                 onInvalid={(e) => { e.currentTarget.setCustomValidity('Please fill the Task Title.') }}
                 onInput={(e) => { e.currentTarget.setCustomValidity('') }}
             />

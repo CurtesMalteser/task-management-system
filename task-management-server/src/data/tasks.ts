@@ -86,7 +86,7 @@ export function validateTaskFields(task: TaskRequest) {
     if (missingFields.length > 0) {
       return `Missing required fields: ${missingFields.join(', ')}`;
     }
-    // Proceed with main logic if no fields are missing
+
     return null;
   }
 

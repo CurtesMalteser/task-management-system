@@ -16,22 +16,33 @@ function NewTask() {
 
     const navigate = useNavigate();
 
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
     const [priority, setPriority] = useState<Priority>(Priority.LOW);
     const [dueDate, setDueDate] = useState<Date | null>(new Date());
 
-    // {
-    //     title: 'Task 6',
-    //     description: 'Description 6',
-    //     dueDate: 1721727000000,
-    //     priority: Priority.HIGH,
-    // }
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.group('✅ Task Details');
+        console.log(`🔥 Title: ${title}`);
+        console.log(`📝 Description: ${description}`);
+        console.log(`🔥 Priority: ${priority}`);
+        console.log(`⌛️ Due Date: ${dueDate}`);
+        console.groupEnd();
+    };
 
     return (
         <Container className="md-8">
             <h1>Hello New Task Component</h1>
-            <Form /*onSubmit={handleSubmit}*/>
-                <TitleFormGroup />
-                <DescriptionFormGroup />
+            <Form onSubmit={handleSubmit} >
+                <TitleFormGroup
+                    value={title}
+                    onChange={setTitle}
+                />
+                <DescriptionFormGroup
+                    value={description}
+                    onChange={setDescription}
+                />
                 <Row className='mb-3'>
                     <Col>
                         <PriorityFormSelect
@@ -53,13 +64,6 @@ function NewTask() {
                         type="submit"
                         variant="primary"
                         value="Save"
-                        onClick={() => {
-                            console.group('✅ Task Details');
-                            console.log(`🔥 Priority: ${priority}`)
-                            console.log(`⌛️ Due Date: ${dueDate}`)
-                            console.groupEnd();
-                        }
-                        }
                     />
                     {' '} {/* Add a space between the buttons */}
                     <Button
