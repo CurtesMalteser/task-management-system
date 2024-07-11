@@ -140,4 +140,9 @@ export const completedTasksSelector = createSelector(
     (tasks) => tasks.filter(task => task.status === "completed")
 );
 
+export const overdueTasksSelector = createSelector(
+    (state: RootState) => state.tasks.tasks,
+    (tasks) => tasks.filter(task => new Date(task.dueDate) < new Date() && task.status !== 'completed')
+);
+
 export default tasksSlice.reducer;
