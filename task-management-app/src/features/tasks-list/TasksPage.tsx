@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/esm/Container";
-import TasksBoard from "./components/TasksBoard";
+//import TasksBoard from "./components/TasksBoard";
 import TasksList from "./components/TasksList";
 
 function TasksPage() {
@@ -7,8 +7,8 @@ function TasksPage() {
   return (
     <Container className="md-9">
       <h1>Home Page</h1>
-      <TasksBoard />
-      {/* <TasksList /> */}
+      {/* <TasksBoard /> */}
+      <TasksList />
     </Container>
   );
 }
