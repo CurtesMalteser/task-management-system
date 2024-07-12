@@ -4,10 +4,10 @@ import Card from 'react-bootstrap/esm/Card';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import { PriorityIcon, StatusBadge } from '../../../utils/icons';
-import './TaskItem.css';
 import { isOverdueDate } from '../../../utils/date';
+import './TaskItem.css';
 
-interface TaskItemProps {
+export interface TaskItemProps {
     title: string;
     description: string;
     dueDate: string;
