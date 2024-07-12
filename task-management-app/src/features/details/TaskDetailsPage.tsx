@@ -5,7 +5,9 @@ import {
     fetchTaskAsync,
     statusSelector,
     taskSelector,
+    updateTaskAsync,
 } from './taskDetailsSlice';
+import { Task, Status as TaskStatus } from "task-management-lib/lib/task";
 import { Status } from '../../constants/Status';
 import Container from 'react-bootstrap/esm/Container';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
@@ -27,6 +29,18 @@ function TaskDetailsPage() {
     useEffect(() => {
         if (id) dispatch(fetchTaskAsync(id));
     }, [dispatch, id]);
+
+    const updateStatus = (status: TaskStatus, task: Task) => {
+        dispatch(updateTaskAsync({
+            ...task,
+            status,
+        })).then((response) => {
+            // Add the status to the task object in the store,
+            // update the tasksSlice to have a reducer for this action
+            // Update from new task too on success
+            response.payload && console.log('Task status updated');
+        });
+    };
 
     if (status === Status.LOADING) return <div>Loading...</div>;
     if (status === Status.FAILED) return <div>Failed to load task</div>;
@@ -59,14 +73,11 @@ function TaskDetailsPage() {
                             Change Status
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Open</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">In Progress</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Completed</Dropdown.Item>
+                            <Dropdown.Item onClick={() => updateStatus(TaskStatus.OPEN, task)}>Open</Dropdown.Item>
+                            <Dropdown.Item onClick={() => updateStatus(TaskStatus.IN_PROGRESS, task)}>In Progress</Dropdown.Item>
+                            <Dropdown.Item onClick={() => updateStatus(TaskStatus.COMPLETED, task)}>Completed</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-
-
-
                 </>
             }
         </Container>

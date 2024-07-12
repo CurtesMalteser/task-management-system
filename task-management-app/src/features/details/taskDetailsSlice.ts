@@ -3,7 +3,10 @@ import {
     Task,
 } from "task-management-lib/lib/task";
 import { Status } from "../../constants/Status";
-import { fetchTask } from './taskDetailsApi';
+import {
+    fetchTask,
+    updateTask,
+} from './taskDetailsApi';
 import { RootState } from '../../app/store';
 
 export enum Mode {
@@ -31,6 +34,14 @@ export const fetchTaskAsync = createAsyncThunk(
     }
 );
 
+export const updateTaskAsync = createAsyncThunk(
+    'task/updateTask',
+    async (task: Task) => {
+        const response = await updateTask(task);
+        return response;
+    }
+);
+
 export const taskDetailskSlice = createSlice({
     name: 'task',
     initialState,
@@ -45,6 +56,16 @@ export const taskDetailskSlice = createSlice({
                 state.task = action.payload;
             })
             .addCase(fetchTaskAsync.rejected, (state) => {
+                state.status = Status.FAILED;
+            })
+            .addCase(updateTaskAsync.pending, (state) => {
+                state.status = Status.LOADING;
+            })
+            .addCase(updateTaskAsync.fulfilled, (state, action) => {
+                state.status = Status.IDLE;
+                state.task = action.payload;
+            })
+            .addCase(updateTaskAsync.rejected, (state) => {
                 state.status = Status.FAILED;
             });
     },
