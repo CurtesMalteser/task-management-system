@@ -8,4 +8,8 @@ function formatDate(timeMillis: number): string {
     });
 }
 
+export function isOverdueDate(timeMillis: number | string): boolean {
+    return new Date(timeMillis) < new Date();
+}
+
 export default formatDate;

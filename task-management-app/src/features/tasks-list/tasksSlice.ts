@@ -11,6 +11,7 @@ import {
 import { Status } from "../../constants/Status";
 import { fetchTasks } from './tasksApi';
 import { RootState } from '../../app/store';
+import { isOverdueDate } from '../../utils/date';
 
 const priorityOrder: { [key in Priority]: number } = {
     [Priority.HIGH]: 3,
@@ -142,7 +143,7 @@ export const completedTasksSelector = createSelector(
 
 export const overdueTasksSelector = createSelector(
     (state: RootState) => state.tasks.tasks,
-    (tasks) => tasks.filter(task => new Date(task.dueDate) < new Date() && task.status !== 'completed')
+    (tasks) => tasks.filter(task => isOverdueDate(task.dueDate) && task.status !== 'completed')
 );
 
 export default tasksSlice.reducer;

@@ -18,16 +18,20 @@
     color: #888;
 }
 
+.task-item-date.overdue {
+    color: #dc3545; /* Bootstrap danger color */
+}
+
 .task-item-description {
     margin-top: 8px;
 }
 
-.task-item-header h4 {
+.task-item-header h5 {
     display: flex;
     align-items: center;
 }
 
-.task-item-header h4 svg {
+.task-item-header h5 svg {
     margin-left: 8px;
     width: 36px;
     height: 36px;
@@ -37,3 +41,20 @@
     margin-left: 8px;
     font-size: 0.9em;
 }
+
+@media (max-width: 768px) {
+    .task-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .task-item-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .task-item-date {
+      margin-top: 4px;
+    }
+  }

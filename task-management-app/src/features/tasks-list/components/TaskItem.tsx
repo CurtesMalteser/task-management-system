@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import { PriorityIcon, StatusBadge } from '../../../utils/icons';
 import './TaskItem.css';
+import { isOverdueDate } from '../../../utils/date';
 
 interface TaskItemProps {
     title: string;
@@ -16,15 +17,17 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = ({ title, description, dueDate, priority, status }) => {
 
+    const isOverdue = isOverdueDate(dueDate);
+
     return (
         <Card className="task-item mb-3">
             <Card.Body>
                 <Row className="task-item-header align-items-center">
                     <Col xs={12} sm={8}>
-                        <h4 className="d-inline">{title} {PriorityIcon(priority)} {<span className='status-badge'>{StatusBadge(status)}</span>} </h4>
+                        <h5 className="d-inline">{title} {PriorityIcon(priority)} {<span className='status-badge'>{StatusBadge(status)}</span>} </h5>
                     </Col>
                     <Col xs={12} sm={4} className="text-sm-right">
-                        <p className="task-item-date mb-0">Due Date: {dueDate}</p>
+                        <p className={`task-item-date mb-0 ${isOverdue ? 'overdue' : ''}`}>Due Date: {dueDate}</p>
                     </Col>
                 </Row>
                 <Row>
