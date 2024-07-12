@@ -4,6 +4,7 @@ import {
 } from "../tasksSlice";
 import Filters from "./Filters";
 import formatDate from "../../../utils/date";
+import TaskItem from "./TaskItem";
 
 function TasksList() {
     const tasks = useAppSelector(filteredTasksSelector);
@@ -13,7 +14,13 @@ function TasksList() {
             <Filters />
             {tasks.map((task) => (
                 <div key={task.id}>
-                    {task.id} | {task.title} | {task.priority} | {task.status} | {formatDate(task.dueDate)} | {formatDate(task.creationDate)}
+                    <TaskItem   
+                        title={task.title}
+                        description={task.description}
+                        dueDate={formatDate(task.dueDate)}
+                        priority={task.priority}
+                        status={task.status}
+                        />
                 </div>
             ))}
         </>
