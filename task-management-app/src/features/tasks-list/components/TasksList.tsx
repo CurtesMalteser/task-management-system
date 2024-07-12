@@ -13,15 +13,14 @@ function TasksList() {
         <>
             <Filters />
             {tasks.map((task) => (
-                <div key={task.id}>
-                    <TaskItem   
-                        title={task.title}
-                        description={task.description}
-                        dueDate={formatDate(task.dueDate)}
-                        priority={task.priority}
-                        status={task.status}
-                        />
-                </div>
+                <TaskItem
+                    key={task.id}
+                    title={task.title}
+                    description={task.description}
+                    dueDate={formatDate(task.dueDate)}
+                    priority={task.priority}
+                    status={task.status}
+                />
             ))}
         </>
     );

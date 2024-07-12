@@ -22,13 +22,18 @@
     margin-top: 8px;
 }
 
-.task-item-header h3 {
+.task-item-header h4 {
     display: flex;
     align-items: center;
 }
 
-.task-item-header h3 svg {
+.task-item-header h4 svg {
     margin-left: 8px;
-    width: 1em;
-    height: 1em;
+    width: 36px;
+    height: 36px;
+}
+  
+.task-item-header .status-badge {
+    margin-left: 8px;
+    font-size: 0.9em;
 }
