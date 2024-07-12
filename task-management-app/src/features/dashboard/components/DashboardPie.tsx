@@ -17,6 +17,13 @@ function DashboardPie({ data, title, header }: ChartProps) {
             google.charts.load('current', { packages: ['corechart'] });
             google.charts.setOnLoadCallback(drawChart);
         }
+        const handleResize = () => {
+            drawChart();
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const drawChart = () => {
@@ -27,7 +34,7 @@ function DashboardPie({ data, title, header }: ChartProps) {
         chart.draw(chartData, options);
     };
 
-    return (
+      return (
         <HelmetProvider>
             <div>
                 <Helmet>
