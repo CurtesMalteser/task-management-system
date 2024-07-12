@@ -61,6 +61,15 @@ const tasks: { [key: string]: Task } = {
         priority: Priority.HIGH,
         status: Status.COMPLETED,
     },
+    7: {
+        id: "7",
+        title: "Overdue Task",
+        description: "This task provides an overdue task example",
+        priority: Priority.HIGH,
+        dueDate: 1720597738000,
+        status: Status.OPEN,
+        creationDate: 1720009800000
+      }
 }
 
 export function getTasks(): Tasks {
