@@ -40,7 +40,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Description 4',
         dueDate: 1721313000000,
         creationDate: 1720355400000,
-         priority: Priority.HIGH,
+        priority: Priority.HIGH,
         status: Status.IN_PROGRESS,
     },
     5: {
@@ -69,7 +69,16 @@ const tasks: { [key: string]: Task } = {
         dueDate: 1720597738000,
         status: Status.OPEN,
         creationDate: 1720009800000
-      }
+    },
+    8: {
+        id: "8",
+        title: "Task Lorem ipsum dolor sit amet",
+        description: "Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur",
+        priority: Priority.HIGH,
+        dueDate: 1720597738000,
+        status: Status.OPEN,
+        creationDate: 1720009800000
+    },
 }
 
 export function getTasks(): Tasks {
@@ -82,7 +91,7 @@ export function getTask(id: string): Task {
     return tasks[id];
 }
 
-const isValidPriority =(value: any): value is Priority  =>  Object.values(Priority).includes(value);
+const isValidPriority = (value: any): value is Priority => Object.values(Priority).includes(value);
 
 
 export function validateTaskFields(task: TaskRequest) {
@@ -91,18 +100,18 @@ export function validateTaskFields(task: TaskRequest) {
     if (!task.description) missingFields.push('description');
     if (typeof task.dueDate !== 'number') missingFields.push('dueDate');
     if (!isValidPriority(task.priority)) missingFields.push('priority');
-  
+
     if (missingFields.length > 0) {
-      return `Missing required fields: ${missingFields.join(', ')}`;
+        return `Missing required fields: ${missingFields.join(', ')}`;
     }
 
     return null;
-  }
+}
 
-  export function addTask(taskData: TaskRequest): Task {
+export function addTask(taskData: TaskRequest): Task {
 
     const id = (Object.keys(tasks).length + 1).toString();
-    
+
     const newTask: Task = {
         ...taskData,
         id: id,

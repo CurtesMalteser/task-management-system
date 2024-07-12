@@ -7,7 +7,7 @@ import formatDate from "../../../utils/date";
 import TaskItem from "./TaskItem";
 import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
-import { Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
 
 function TasksList() {
