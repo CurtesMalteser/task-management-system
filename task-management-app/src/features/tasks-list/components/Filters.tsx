@@ -49,29 +49,24 @@ const Filters = () => {
     };
 
     return (
-        <Navbar bg="light" expand="lg" className="mb-3">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    <DropdownButton
-                        id="filter-tasks-dropdown"
-                        title={`Filter: ${taskStatusToString(filterBy)}`}
-                        className="mr-2"
-                    >
-                        <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.IN_PROGRESS)} eventKey="in-progress">In Progress</Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.COMPLETED)} eventKey="completed">Completed</Dropdown.Item>
-                    </DropdownButton>
-                    <DropdownButton
-                        id="sort-tasks-dropdown"
-                        title={`Sort: ${sortTasksToString(sortBy)}`}
-                    >
-                        <Dropdown.Item onClick={() => handleSortSelect(Sort.DUE_DATE)} eventKey="due-date">Due Date</Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleSortSelect(Sort.PRIORITY)} eventKey="priority">Priority</Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleSortSelect(Sort.CREATION_DATE)} eventKey="creation-date">Creation Date</Dropdown.Item>
-                    </DropdownButton>
-                </Nav>
-            </Navbar.Collapse>
+        <Navbar bg="light" className="mb-3">
+                <DropdownButton
+                    id="filter-tasks-dropdown"
+                    title={`Filter: ${taskStatusToString(filterBy)}`}
+                    className="me-2"
+                >
+                    <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.IN_PROGRESS)} eventKey="in-progress">In Progress</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.COMPLETED)} eventKey="completed">Completed</Dropdown.Item>
+                </DropdownButton>
+                <DropdownButton
+                    id="sort-tasks-dropdown"
+                    title={`Sort: ${sortTasksToString(sortBy)}`}
+                >
+                    <Dropdown.Item onClick={() => handleSortSelect(Sort.DUE_DATE)} eventKey="due-date">Due Date</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleSortSelect(Sort.PRIORITY)} eventKey="priority">Priority</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleSortSelect(Sort.CREATION_DATE)} eventKey="creation-date">Creation Date</Dropdown.Item>
+                </DropdownButton>
         </Navbar>
     );
 };
