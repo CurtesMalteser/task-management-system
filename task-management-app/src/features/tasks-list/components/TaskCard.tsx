@@ -6,12 +6,12 @@ import { isOverdueDate } from '../../../utils/date';
 import { TaskItemProps } from './TaskItem';
 import './TaskItem.css';
 
-const TaskCard: React.FC<TaskItemProps> = ({ title, description, dueDate, priority, status }) => {
+const TaskCard: React.FC<TaskItemProps> = ({ title, description, dueDate, priority, status, hanldeClick }) => {
 
     const isOverdue = isOverdueDate(dueDate);
 
     return (
-        <Card className="task-item mb-3">
+        <Card className="task-item mb-3" onClick={hanldeClick}>
             <Card.Body className="task-item-header">
                 <Row className="task-item-header">
                     <Card.Title className="task-item-header mt-2">{title}</Card.Title>

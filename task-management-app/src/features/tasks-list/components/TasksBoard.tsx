@@ -15,9 +15,9 @@ function TasksBoard() {
 
     return (
         <Row>
-            <TasksColumn title="To Do" tasks={todoTasks} statusHandler={({ id, status }) => console.log(`id: ${id}, status: ${status}`)} />
-            <TasksColumn title="In Progress" tasks={inProgressTasks} statusHandler={({ id, status }) => console.log(`id: ${id}, status: ${status}`)} />
-            <TasksColumn title="Done" tasks={completedTasks} statusHandler={({ id, status }) => console.log(`id: ${id}, status: ${status}`)} />
+            <TasksColumn title="To Do" tasks={todoTasks} />
+            <TasksColumn title="In Progress" tasks={inProgressTasks} />
+            <TasksColumn title="Done" tasks={completedTasks} />
         </Row>
     );
 }

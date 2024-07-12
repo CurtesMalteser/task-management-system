@@ -13,14 +13,15 @@ export interface TaskItemProps {
     dueDate: string;
     priority: Priority;
     status: Status;
+    hanldeClick: () => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ title, description, dueDate, priority, status }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ title, description, dueDate, priority, status, hanldeClick }) => {
 
     const isOverdue = isOverdueDate(dueDate);
 
     return (
-        <Card className="task-item mb-3">
+        <Card className="task-item mb-3" onClick={hanldeClick}>
             <Card.Body>
                 <Row className="task-item-header align-items-center">
                     <Col xs={12} sm={8}>

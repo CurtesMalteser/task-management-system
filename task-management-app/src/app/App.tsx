@@ -18,6 +18,7 @@ import TasksPage from '../features/tasks-list/TasksPage';
 import NewTask from '../features/new-task/NewTask';
 import DashboardPage from '../features/dashboard/DashboardPage';
 import { Status } from '../constants/Status';
+import TaskDetailsPage from '../features/details/TaskDetailsPage';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       { path: ROUTES.HOME, element: <TasksPage /> },
       { path: ROUTES.DASHBOARD, element: <DashboardPage /> },
       { path: ROUTES.NEW_TASK, element: <NewTask /> },
-
+      { path: ROUTES.TASK, element: <TaskDetailsPage /> }
     ],
   },
 ]);

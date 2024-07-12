@@ -7,9 +7,14 @@ import formatDate from "../../../utils/date";
 import TaskItem from "./TaskItem";
 import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
+import { Route, useNavigate } from "react-router-dom";
+import ROUTES from "../../../constants/routes";
 
 function TasksList() {
+
     const tasks = useAppSelector(filteredTasksSelector);
+
+    const navigate = useNavigate();
 
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
 
@@ -25,6 +30,8 @@ function TasksList() {
         };
     }, []);
 
+    const handleTaskClick = (id: string) => { navigate(ROUTES.TASK.replace(':id', id)) };
+
     return (
         <>
             <Filters />
@@ -37,6 +44,7 @@ function TasksList() {
                         dueDate={formatDate(task.dueDate)}
                         priority={task.priority}
                         status={task.status}
+                        hanldeClick={() => handleTaskClick(task.id)}
                     />
                     )) : (<TaskItem
                         key={task.id}
@@ -45,6 +53,7 @@ function TasksList() {
                         dueDate={formatDate(task.dueDate)}
                         priority={task.priority}
                         status={task.status}
+                        hanldeClick={() => handleTaskClick(task.id)}
                     />
                 )
             ))}

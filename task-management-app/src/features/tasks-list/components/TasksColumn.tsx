@@ -2,8 +2,15 @@ import Col from "react-bootstrap/esm/Col";
 import { Task } from "task-management-lib/lib/task";
 import TaskCard from "./TaskCard";
 import formatDate from "../../../utils/date";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../../constants/routes";
 
-function TasksColumn({ title, tasks, statusHandler }: { title: string, tasks: Task[], statusHandler: ({ id, status }: { id: string, status: string }) => void }) {
+function TasksColumn({ title, tasks }: { title: string, tasks: Task[]}) {
+
+    const navigate = useNavigate();
+
+    const handleTaskClick = (id: string) => { navigate(ROUTES.TASK.replace(':id', id)) };
+
     return (
         <Col className="md-3">
             <h2>{title}</h2>
@@ -15,6 +22,7 @@ function TasksColumn({ title, tasks, statusHandler }: { title: string, tasks: Ta
                     dueDate={formatDate(task.dueDate)}
                     priority={task.priority}
                     status={task.status}
+                    hanldeClick={() => handleTaskClick(task.id)}
                 />
             ))}
         </Col>
