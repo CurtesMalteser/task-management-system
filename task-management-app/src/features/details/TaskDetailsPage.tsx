@@ -7,6 +7,7 @@ import {
     taskSelector,
     updateTaskAsync,
 } from './taskDetailsSlice';
+import { storeTask } from '../tasks-list/tasksSlice';
 import { Task, Status as TaskStatus } from "task-management-lib/lib/task";
 import { Status } from '../../constants/Status';
 import Container from 'react-bootstrap/esm/Container';
@@ -35,10 +36,7 @@ function TaskDetailsPage() {
             ...task,
             status,
         })).then((response) => {
-            // Add the status to the task object in the store,
-            // update the tasksSlice to have a reducer for this action
-            // Update from new task too on success
-            response.payload && console.log('Task status updated');
+            response.payload && dispatch(storeTask(response.payload))
         });
     };
 

@@ -67,6 +67,14 @@ export const tasksSlice = createSlice({
         },
         setSortTasks: (state, action) => {
             state.sortBy = action.payload;
+        },
+        storeTask: (state, action) => {
+            const taskIndex = state.tasks.findIndex(task => task.id === action.payload.id);
+            if (taskIndex !== -1) {
+                state.tasks[taskIndex] = action.payload;
+            } else {
+                state.tasks.push(action.payload);
+            }
         }
     },
     extraReducers: (builder) => {
@@ -87,6 +95,7 @@ export const tasksSlice = createSlice({
 export const {
     setFilterTasksByStatus,
     setSortTasks,
+    storeTask,
 } = tasksSlice.actions;
 
 export const statusSelector = (state: RootState) => state.tasks.status;

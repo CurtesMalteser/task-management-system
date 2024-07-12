@@ -19,6 +19,7 @@ import {
     postTaskAsync,
     statusSelector as postTaskStatusSelector,
 } from './newTaskSlice';
+import { storeTask } from '../tasks-list/tasksSlice';
 import { Status } from '../../constants/Status';
 
 function NewTask() {
@@ -42,7 +43,7 @@ function NewTask() {
             priority,
             dueDate: dueDate ? dueDate.getTime() : 0,
         })).then((response) => {
-            response.payload && console.log(`✅ Task created: ${(response.payload as Task).title}`); 
+            response.payload && dispatch(storeTask(response.payload));
         });
     };
 
