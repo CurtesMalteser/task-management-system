@@ -75,6 +75,9 @@ export const tasksSlice = createSlice({
             } else {
                 state.tasks.push(action.payload);
             }
+        },
+        removeTask: (state, action) => {
+            state.tasks = state.tasks.filter(task => task.id !== action.payload);
         }
     },
     extraReducers: (builder) => {
@@ -96,6 +99,7 @@ export const {
     setFilterTasksByStatus,
     setSortTasks,
     storeTask,
+    removeTask,
 } = tasksSlice.actions;
 
 export const statusSelector = (state: RootState) => state.tasks.status;

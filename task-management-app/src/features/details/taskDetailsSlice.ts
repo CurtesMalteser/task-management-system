@@ -4,6 +4,7 @@ import {
 } from "task-management-lib/lib/task";
 import { Status } from "../../constants/Status";
 import {
+    deleteTask,
     fetchTask,
     updateTask,
 } from './taskDetailsApi';
@@ -42,6 +43,11 @@ export const updateTaskAsync = createAsyncThunk(
     }
 );
 
+export const deleteTaskAsync = createAsyncThunk(
+    'task/deleteTask',
+    async (id: string) => await deleteTask(id)
+);
+
 export const taskDetailskSlice = createSlice({
     name: 'task',
     initialState,
@@ -66,6 +72,13 @@ export const taskDetailskSlice = createSlice({
                 state.task = action.payload;
             })
             .addCase(updateTaskAsync.rejected, (state) => {
+                state.status = Status.FAILED;
+            }).addCase(deleteTaskAsync.pending, (state) => {
+                state.status = Status.LOADING;
+            }).addCase(deleteTaskAsync.fulfilled, (state) => {
+                state.task = null;
+                state.status = Status.IDLE;
+            }).addCase(deleteTaskAsync.rejected, (state) => {
                 state.status = Status.FAILED;
             });
     },
