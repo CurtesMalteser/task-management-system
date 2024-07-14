@@ -51,7 +51,11 @@ export const deleteTaskAsync = createAsyncThunk(
 export const taskDetailskSlice = createSlice({
     name: 'task',
     initialState,
-    reducers: {},
+    reducers: {
+        setMode: (state, action) => {
+            state.mode = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchTaskAsync.pending, (state) => {
@@ -83,6 +87,8 @@ export const taskDetailskSlice = createSlice({
             });
     },
 });
+
+export const { setMode } = taskDetailskSlice.actions;
 
 export const statusSelector = (state: RootState) => state.taskDetails.status;
 export const modeSelector = (state: RootState) => state.taskDetails.mode;
