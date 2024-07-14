@@ -43,7 +43,15 @@ function NewTask() {
             priority,
             dueDate: dueDate ? dueDate.getTime() : 0,
         })).then((response) => {
-            response.payload && dispatch(storeTask(response.payload));
+            if (response.payload) {
+                const task: Task = response.payload as Task;
+                dispatch(storeTask(task));
+                return task.id;
+            } else {
+                return null;
+            }
+        }).then((id: string | null) => {
+            id && navigate(ROUTES.TASK.replace(':id', id), { replace: true });
         });
     };
 

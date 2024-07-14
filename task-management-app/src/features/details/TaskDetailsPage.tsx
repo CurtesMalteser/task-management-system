@@ -75,7 +75,6 @@ function TaskDetailsPage() {
 
     const { updateStatus, deleteTask, showUseState: [show, setShow] }: TaskDetailsHook = useTaskDetails(id);
 
-
     const handleClose = () => setShow(false);
 
     const task = useAppSelector(taskSelector);
