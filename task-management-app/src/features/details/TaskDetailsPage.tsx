@@ -169,7 +169,7 @@ function TaskDetailsPage() {
                     </Row>
                     <Card className="task-item-description mt-2">
                         <Card.Body>
-                            <p>{task.description}</p>
+                            <Card.Text>{task.description}</Card.Text>
                         </Card.Body>
                     </Card>
                     <p className={`task-item-date mt-2 mb-0 ${isOverdueDate(task.dueDate) ? 'overdue' : ''}`}>Due Date: {formatDate(task.dueDate)}</p>
