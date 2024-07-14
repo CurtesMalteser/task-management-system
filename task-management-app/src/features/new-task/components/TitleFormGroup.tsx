@@ -3,7 +3,7 @@ import { TextInputProps } from './inputProps';
 
 function TitleFormGroup({value, onChange}: TextInputProps) {
     return (
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="taskForm.TitleTextArea">
             <Form.Label>Title:</Form.Label>
             <Form.Control type="text"
                 placeholder="Please fill in the task title."

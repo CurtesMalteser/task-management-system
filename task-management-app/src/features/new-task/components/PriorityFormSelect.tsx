@@ -8,7 +8,7 @@ interface PriorityFormSelectProps {
 
 function PriorityFormSelect({ value, onChange }: PriorityFormSelectProps) {
     return (
-        <Form.Group className="d-flex align-items-center" controlId="priority">
+        <Form.Group className="d-flex align-items-center" controlId="taskForm.Priority">
             <Form.Label className="me-2">Priority:</Form.Label>
             <Form.Select
                 value={value}

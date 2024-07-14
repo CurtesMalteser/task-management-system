@@ -3,7 +3,7 @@ import { TextInputProps } from './inputProps';
 
 function DescriptionFormGroup({ value, onChange }: TextInputProps) {
     return (
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Group className="mb-3" controlId="taskForm.DescriptionTextArea">
             <Form.Label>Description:</Form.Label>
             <Form.Control type="text"
                 placeholder="Please describe the task."
