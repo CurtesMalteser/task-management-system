@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import ROUTES from '../../constants/routes';
+import DarkModeToggle from './components/DarkModeToggle';
 
 function AppNavBar() {
     return (
@@ -17,6 +18,7 @@ function AppNavBar() {
                         <Nav.Link as={Link} to={ROUTES.NEW_TASK}>New</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
+                <DarkModeToggle />
             </Container>
         </Navbar>
     );
