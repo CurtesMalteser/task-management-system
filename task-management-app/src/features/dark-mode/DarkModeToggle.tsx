@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ReactComponent as Sun } from '../../../assets/svg/sun.svg';
-import { ReactComponent as Moon } from '../../../assets/svg/moon.svg';
-import { ReactComponent as Auto } from '../../../assets/svg/dark-light.svg';
+import { ReactComponent as Sun } from '../../assets/svg/sun.svg';
+import { ReactComponent as Moon } from '../../assets/svg/moon.svg';
+import { ReactComponent as Auto } from '../../assets/svg/dark-light.svg';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DarkModeToggleItem from './DarkModeToggleItem';
 import './DarkModeToggle.css';

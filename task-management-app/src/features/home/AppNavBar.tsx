@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import ROUTES from '../../constants/routes';
-import DarkModeToggle from './components/DarkModeToggle';
+import DarkModeToggle from '../../features/dark-mode/DarkModeToggle';
 
 function AppNavBar() {
     return (
