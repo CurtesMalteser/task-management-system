@@ -11,6 +11,8 @@ import {
     Sort,
     sortSelector,
     taskStatusFilterSelector,
+    searchTask,
+    searchSelector,
 } from '../tasksSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Status as TaskStatus } from "task-management-lib/lib/task";
@@ -46,6 +48,7 @@ const Filters = () => {
     const dispatch = useAppDispatch();
     const filterBy = useAppSelector(taskStatusFilterSelector);
     const sortBy = useAppSelector(sortSelector);
+    const search = useAppSelector(searchSelector);
 
     const handleFilterSelect = (status: TaskStatus | null) => {
         dispatch(setFilterTasksByStatus(status));
@@ -81,6 +84,8 @@ const Filters = () => {
                             type="text"
                             placeholder="Search"
                             className="mr-sm-2"
+                            value={search}
+                            onChange={(e) => dispatch(searchTask(e.target.value))}
                         />
                     </Col>
                     <Col style={{paddingLeft:'0px'}} className='ms-2'>
