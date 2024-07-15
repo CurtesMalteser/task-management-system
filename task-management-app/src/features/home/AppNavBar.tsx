@@ -6,7 +6,7 @@ import ROUTES from '../../constants/routes';
 
 function AppNavBar() {
     return (
-        <Navbar expand="lg" className="bg-body-tertiary" style={{ marginBottom: "48px" }}>
+        <Navbar expand="lg" className="navbar-dark bg-primary" style={{ marginBottom: "48px" }}>
             <Container>
                 <Navbar.Brand as={Link} to={ROUTES.HOME}>Employee Polls</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
