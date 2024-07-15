@@ -6,6 +6,8 @@ function DescriptionFormGroup({ value, onChange }: TextInputProps) {
         <Form.Group className="mb-3" controlId="taskForm.DescriptionTextArea">
             <Form.Label>Description:</Form.Label>
             <Form.Control type="text"
+                as="textarea"
+                rows={3}
                 placeholder="Please describe the task."
                 required
                 value={value}

@@ -79,6 +79,24 @@ const tasks: { [key: string]: Task } = {
         status: Status.OPEN,
         creationDate: 1720009800000
     },
+    9: {
+        id: "9",
+        creationDate: 1721030597132,
+        title: "Search Task",
+        description: "Implement search functionality. The user should be able to search for tasks by title or description. The search should be case-insensitive and should return all tasks that contain the search term. The search results should be displayed on the list. The search should be triggered by the user typing in the search box. The search bar is displayed at the top of the list next to the filter dropdown.",
+        priority: Priority.HIGH,
+        dueDate: 1721088000000,
+        status: Status.OPEN
+    },
+    10: {
+        id: "10",
+        creationDate: 1721030597132,
+        title: "Fix Edit Task",
+        description: "Fix edit task by seeting the current task with useState hook when it's lodaded, and update the task without modifing the values should work correctly.",
+        priority: Priority.HIGH,
+        dueDate: 1721088000000,
+        status: Status.OPEN
+    },
 }
 
 export function getTasks(): Tasks {
