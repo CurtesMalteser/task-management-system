@@ -7,3 +7,4 @@
    - [dark-light.svg](https://www.svgrepo.com/svg/436702/circle-lefthalf-fill)
    - [moon.svg](https://www.svgrepo.com/svg/436819/moon-stars-fill)
    - [sun.svg](https://www.svgrepo.com/svg/436936/sun-max-fill)
+   - [filter.svg](https://www.svgrepo.com/svg/509927/filter)

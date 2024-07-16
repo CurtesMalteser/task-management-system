@@ -1,0 +1,17 @@
+@import "../../../custom.css";
+
+.filter-navbar {
+    border: 3px solid var(--bs-primary);
+    border-radius: 24px;
+    padding: 1rem;
+    background-color: light-dark(#e1e7f8, var(--bs-dark));
+}
+
+.filter-size {
+    width: 30px;
+    height: 30px;
+}
+
+.filter-style path {
+    fill: light-dark(var(--bs-body-color), var(--bs-white));
+}

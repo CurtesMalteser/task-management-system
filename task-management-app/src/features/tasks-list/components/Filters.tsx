@@ -1,10 +1,10 @@
-import Navbar from 'react-bootstrap/esm/Navbar';
-import Dropdown from 'react-bootstrap/esm/Dropdown';
-import DropdownButton from 'react-bootstrap/esm/DropdownButton';
+import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import {
     setFilterTasksByStatus,
     setSortTasks,
@@ -16,7 +16,8 @@ import {
 } from '../tasksSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Status as TaskStatus } from "task-management-lib/lib/task";
-
+import { ReactComponent as Filter } from '../../../assets/svg/filter.svg';
+import './Filters.css';
 
 // #region utils
 const taskStatusToString = (status: TaskStatus | null) => {
@@ -40,11 +41,9 @@ const sortTasksToString = (sort: Sort) => {
             return 'Creation Date';
     }
 };
-
 // #endregion utils
 
 const Filters = () => {
-
     const dispatch = useAppDispatch();
     const filterBy = useAppSelector(taskStatusFilterSelector);
     const sortBy = useAppSelector(sortSelector);
@@ -58,41 +57,52 @@ const Filters = () => {
         dispatch(setSortTasks(sort));
     };
 
+    const dispatchSearchTask = (search: string) => {
+        dispatch(searchTask(search));
+    }
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (search.trim() !== '') dispatchSearchTask(search);
+    }
+
     return (
-        <Navbar bg="light" className="mb-3">
-            <DropdownButton
-                id="filter-tasks-dropdown"
-                title={`Filter: ${taskStatusToString(filterBy)}`}
-                className="me-2"
-            >
-                <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.IN_PROGRESS)} eventKey="in-progress">In Progress</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.COMPLETED)} eventKey="completed">Completed</Dropdown.Item>
-            </DropdownButton>
-            <DropdownButton
-                id="sort-tasks-dropdown"
-                title={`Sort: ${sortTasksToString(sortBy)}`}
-            >
-                <Dropdown.Item onClick={() => handleSortSelect(Sort.DUE_DATE)} eventKey="due-date">Due Date</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSortSelect(Sort.PRIORITY)} eventKey="priority">Priority</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSortSelect(Sort.CREATION_DATE)} eventKey="creation-date">Creation Date</Dropdown.Item>
-            </DropdownButton>
-            <Form className="ms-3">
-                <Row >
-                    <Col xs="auto" style={{paddingRight:'0px'}}>
+        <Navbar expand="lg" className='mb-3 filter-navbar'>
+            <Container fluid>
+                <Navbar.Toggle aria-controls="navbarScroll">
+                    <Filter className="filter-size filter-style" />
+                </Navbar.Toggle>
+                <Navbar.Collapse id="navbarScroll">
+                    <DropdownButton
+                        id="filter-tasks-dropdown"
+                        title={`Filter: ${taskStatusToString(filterBy)}`}
+                        className="me-2 mb-3 mb-lg-0"
+                    >
+                        <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.IN_PROGRESS)} eventKey="in-progress">In Progress</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.COMPLETED)} eventKey="completed">Completed</Dropdown.Item>
+                    </DropdownButton>
+                    <DropdownButton
+                        id="sort-tasks-dropdown"
+                        title={`Sort: ${sortTasksToString(sortBy)}`}
+                        className="me-2 mb-3 mb-lg-0"
+                    >
+                        <Dropdown.Item onClick={() => handleSortSelect(Sort.DUE_DATE)} eventKey="due-date">Due Date</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleSortSelect(Sort.PRIORITY)} eventKey="priority">Priority</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleSortSelect(Sort.CREATION_DATE)} eventKey="creation-date">Creation Date</Dropdown.Item>
+                    </DropdownButton>
+                    <Form onSubmit={handleSubmit} className="d-flex mt-3 mt-lg-0 ms-auto mb-3 mb-lg-0">
                         <Form.Control
                             type="text"
                             placeholder="Search"
-                            className="mr-sm-2"
+                            className="me-2"
                             value={search}
-                            onChange={(e) => dispatch(searchTask(e.target.value))}
+                            onChange={(e) => dispatchSearchTask(e.target.value)}
                         />
-                    </Col>
-                    <Col style={{paddingLeft:'0px'}} className='ms-2'>
-                        <Button type="submit">Submit</Button>
-                    </Col>
-                </Row>
-            </Form>
+                        <Button type="submit">Search</Button>
+                    </Form>
+                </Navbar.Collapse>
+            </Container>
         </Navbar>
     );
 };
