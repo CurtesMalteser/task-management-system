@@ -3,6 +3,8 @@ import {
     HelmetProvider,
     Helmet,
 } from "react-helmet-async";
+import { isDarkModeSelector } from '../../../features/dark-mode/darkModeSlice';
+import { useAppSelector } from "../../../app/hooks";
 
 const useScript = (src: string) => {
     const [loaded, setLoaded] = useState(false);
@@ -30,6 +32,7 @@ interface ChartProps {
 
 function DashboardPie({ data, title, header }: ChartProps) {
 
+    const isDarkMode = useAppSelector(isDarkModeSelector)
     const scriptLoaded = useScript('https://www.gstatic.com/charts/loader.js');
 
     useEffect(() => {
@@ -49,12 +52,17 @@ function DashboardPie({ data, title, header }: ChartProps) {
         }
 
         return () => window.removeEventListener('resize', handleResize);
-    }, [scriptLoaded]);
+    }, [scriptLoaded, isDarkMode]);
 
     const drawChart = () => {
         const google = (window as any).google;
         const chartData = google.visualization.arrayToDataTable([header, ...data]);
-        const options = { title, pieHole: 0.4 };
+        const options = { title, pieHole: 0.4,
+            backgroundColor: isDarkMode ? '#333' : '#fff',
+            titleTextStyle: { color: isDarkMode ? '#fff' : '#000' },
+            legendTextStyle: { color: isDarkMode ? '#fff' : '#000' },
+            pieSliceTextStyle: { color: isDarkMode ? '#fff' : '#000' },
+        };
         const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(chartData, options);
     };
@@ -65,7 +73,7 @@ function DashboardPie({ data, title, header }: ChartProps) {
                 <Helmet>
                     <script src="https://www.gstatic.com/charts/loader.js"></script>
                 </Helmet>
-                <div id="chart_div" style={{ width: '100%', height: '400px' }} />
+                <div id="chart_div" style={{ width: '100%', height: '400px'}} />
             </div>
         </HelmetProvider>
     );

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ReactComponent as Sun } from '../../assets/svg/sun.svg';
 import { ReactComponent as Moon } from '../../assets/svg/moon.svg';
 import { ReactComponent as Auto } from '../../assets/svg/dark-light.svg';
@@ -7,8 +6,6 @@ import DarkModeToggleItem from './DarkModeToggleItem';
 import './DarkModeToggle.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { darkModeSelector, setDarkMode } from './darkModeSlice';
-
-const prefersDarkMode = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
 function TitleSelection(selectedMode: string) {
     switch (selectedMode) {
@@ -28,10 +25,6 @@ function DarkModeToggle({className}: {className?: string}) {
     const setPreferredTheme = (selectedMode: string) => {
         dispatch(setDarkMode(selectedMode))
     };
-
-    useEffect(() => { 
-        setPreferredTheme(prefersDarkMode())
-    }, []);
 
     return (
         <DropdownButton

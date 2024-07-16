@@ -76,7 +76,7 @@ const Filters = () => {
                     <DropdownButton
                         id="filter-tasks-dropdown"
                         title={`Filter: ${taskStatusToString(filterBy)}`}
-                        className="me-2 mb-3 mb-lg-0"
+                        className="me-2 mb-3 mb-lg-0 mt-3 mt-lg-0"
                     >
                         <Dropdown.Item onClick={() => handleFilterSelect(null)} eventKey="all">All</Dropdown.Item>
                         <Dropdown.Item onClick={() => handleFilterSelect(TaskStatus.IN_PROGRESS)} eventKey="in-progress">In Progress</Dropdown.Item>
@@ -91,8 +91,11 @@ const Filters = () => {
                         <Dropdown.Item onClick={() => handleSortSelect(Sort.PRIORITY)} eventKey="priority">Priority</Dropdown.Item>
                         <Dropdown.Item onClick={() => handleSortSelect(Sort.CREATION_DATE)} eventKey="creation-date">Creation Date</Dropdown.Item>
                     </DropdownButton>
-                    <Form onSubmit={handleSubmit} className="d-flex mt-3 mt-lg-0 ms-auto mb-3 mb-lg-0">
+                    <Form onSubmit={handleSubmit}
+                        className="d-flex mt-3 mt-lg-0 ms-auto mb-3 mb-lg-0"
+                    >
                         <Form.Control
+                            id='search'
                             type="text"
                             placeholder="Search"
                             className="me-2"

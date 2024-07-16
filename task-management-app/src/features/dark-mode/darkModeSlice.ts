@@ -1,5 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+
+const getMode = (mode: string) => mode === 'auto' ? prefersDarkMode() : mode;
+
+const setAppMode = (mode: string) => {
+    const selectedMode = getMode(mode);
+    document.querySelector('html')?.setAttribute('data-bs-theme', selectedMode);
+    return selectedMode;
+}
 
 const prefersDarkMode = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
@@ -8,7 +16,7 @@ interface DarkModeState {
 }
 
 const initialState: DarkModeState = {
-    mode: prefersDarkMode(),
+    mode: setAppMode(prefersDarkMode()),
 };
 
 const darkModeSlice = createSlice({
@@ -17,8 +25,7 @@ const darkModeSlice = createSlice({
     reducers: {
         setDarkMode: (state, action: PayloadAction<string>) => {
             state.mode = action.payload;
-            const selectedMode = action.payload === 'auto' ? prefersDarkMode() : action.payload;
-            document.querySelector('html')?.setAttribute('data-bs-theme', selectedMode);
+            setAppMode(state.mode);
         },
     },
 });
@@ -26,5 +33,9 @@ const darkModeSlice = createSlice({
 export const { setDarkMode } = darkModeSlice.actions;
 
 export const darkModeSelector = (state: RootState) => state.darkMode.mode;
+export const isDarkModeSelector = createSelector(
+    (state: RootState) => state.darkMode.mode,
+    (mode) => getMode(mode) === 'dark'
+);
 
 export default darkModeSlice.reducer;

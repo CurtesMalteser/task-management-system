@@ -9,7 +9,7 @@ function DashboardCards({ statistics }: { statistics: TaskStatistics }) {
 
     return (
         <Row className="mb-3">
-            <Col>
+            <Col className="mb-3 mb-lg-0">
                 <Card>
                     <Card.Body>
                         <Card.Title>Completed Tasks</Card.Title>
@@ -17,7 +17,7 @@ function DashboardCards({ statistics }: { statistics: TaskStatistics }) {
                     </Card.Body>
                 </Card>
             </Col>
-            <Col>
+            <Col className="mb-3 mb-lg-0">
                 <Card>
                     <Card.Body>
                         <Card.Title>Tasks In Progress</Card.Title>
