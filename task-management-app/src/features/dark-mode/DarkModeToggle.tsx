@@ -5,6 +5,8 @@ import { ReactComponent as Auto } from '../../assets/svg/dark-light.svg';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DarkModeToggleItem from './DarkModeToggleItem';
 import './DarkModeToggle.css';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { darkModeSelector, setDarkMode } from './darkModeSlice';
 
 const prefersDarkMode = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
@@ -20,12 +22,11 @@ function TitleSelection(selectedMode: string) {
 }
 
 function DarkModeToggle() {
-    const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode())
+    const dispatch = useAppDispatch();
+    const isDarkMode = useAppSelector(darkModeSelector)
 
     const setPreferredTheme = (selectedMode: string) => {
-        setIsDarkMode(selectedMode)
-        const selection : string = (selectedMode === 'auto') ? prefersDarkMode() : selectedMode
-        document.querySelector('html')?.setAttribute('data-bs-theme', selection)
+        dispatch(setDarkMode(selectedMode))
     };
 
     useEffect(() => { 
