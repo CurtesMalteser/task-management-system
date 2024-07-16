@@ -10,6 +10,9 @@ import {
     modeSelector,
     Mode,
     setMode as setModeAction,
+    errorSelector,
+    ErrorType,
+    resetError,
 } from './taskDetailsSlice';
 import { removeTask, storeTask } from '../tasks-list/tasksSlice';
 import { Priority, Task, Status as TaskStatus } from "task-management-lib/lib/task";
@@ -25,6 +28,9 @@ import Row from 'react-bootstrap/esm/Row';
 import DeleteTaskModal from './components/DeleteTaskModal';
 import ROUTES from '../../constants/routes';
 import TaskForm from '../new-task/components/TaskForm';
+import ErrorPage from '../error/ErrorPage';
+import { Alert } from 'react-bootstrap';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 interface TaskDetailsHook {
     showModal: boolean;
@@ -34,6 +40,7 @@ interface TaskDetailsHook {
     updateTask: (task: Task) => void;
     deleteTask: (handleClose: () => void) => void;
     setMode: (mode: Mode) => void;
+    dispatchResetError: () => void;
 }
 
 const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
@@ -68,15 +75,15 @@ const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
     const deleteTask = (handleClose: () => void) => {
         if (id) {
             dispatch(deleteTaskAsync(id))
-                .then(() => {
-                    dispatch(removeTask(id));
-                }).then(() => {
-                    handleClose()
-                }).then(() => {
-                    navigate(ROUTES.HOME, { replace: true });
-                });
+                .then(unwrapResult)
+                .then(() => dispatch(removeTask(id)))
+                .then(() => navigate(ROUTES.HOME, { replace: true }))
+                .catch((_error) => handleClose())
+                .finally(() => handleClose());
         }
     }
+
+    const dispatchResetError = () => dispatch(resetError());
 
     return {
         updateTask,
@@ -86,9 +93,20 @@ const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
         setMode,
         updatedTask,
         setUpdatedTask,
+        dispatchResetError,
     };
 };
 
+function errorMessage(errorType: ErrorType | null): string {
+    switch (errorType) {
+        case ErrorType.UPDATING:
+            return 'Error: Unable to update the task. Please try again.';
+        case ErrorType.DELETING:
+            return 'Error: Unable to delete the task. Please try again.';
+        default:
+            return 'Error: Unable to perform the operation. Please try again.';
+    }
+}
 
 function TaskDetailsPage() {
 
@@ -102,6 +120,7 @@ function TaskDetailsPage() {
         setMode,
         updatedTask,
         setUpdatedTask,
+        dispatchResetError,
     }: TaskDetailsHook = useTaskDetails(id);
 
     const handleClose = () => setShow(false);
@@ -109,6 +128,7 @@ function TaskDetailsPage() {
     const task = useAppSelector(taskSelector);
     const status = useAppSelector(statusSelector);
     const mode = useAppSelector(modeSelector);
+    const errorType = useAppSelector(errorSelector);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -116,10 +136,18 @@ function TaskDetailsPage() {
     };
 
     if (status === Status.LOADING) return <div>Loading...</div>;
-    if (status === Status.FAILED) return <div>Failed to load task</div>;
+    if (status === Status.FAILED && errorType === ErrorType.FETCHING) return (<ErrorPage />);
 
     return (
         <Container className="task-details mb-3">
+            <Alert
+                variant="danger"
+                show={status === Status.FAILED}
+                onClose={dispatchResetError}
+                dismissible
+            >
+                {errorMessage(errorType)}
+            </Alert>
             <h1 className='mb-3'>Task</h1>
             {(mode === Mode.EDIT) && task && <TaskForm
                 title={(updatedTask ?? task).title}
@@ -193,8 +221,8 @@ function TaskDetailsPage() {
                                     </Dropdown>
                                 </Col>
                                 <Col className="task-actions d-flex justify-content-end">
-                                        <Button variant="outline-primary me-1"  onClick={() => setMode(Mode.EDIT)}>Edit</Button>
-                                        <Button variant="outline-danger" onClick={() => setShow(true)}>Delete</Button>
+                                    <Button variant="outline-primary me-1" onClick={() => setMode(Mode.EDIT)}>Edit</Button>
+                                    <Button variant="outline-danger" onClick={() => setShow(true)}>Delete</Button>
                                 </Col>
                             </Row>
                         </Card.Body>

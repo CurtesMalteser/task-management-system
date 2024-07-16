@@ -29,7 +29,11 @@ export const postTaskAsync = createAsyncThunk(
 export const newTaskSlice = createSlice({
     name: 'newTask',
     initialState,
-    reducers: {},
+    reducers: {
+        resetStatusToIdle: (state) => {
+            state.status = Status.IDLE;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(postTaskAsync.pending, (state) => {
@@ -45,6 +49,7 @@ export const newTaskSlice = createSlice({
     },
 });
 
+export const { resetStatusToIdle } = newTaskSlice.actions;
 export const statusSelector = (state: RootState) => state.newTask.status;
 
 export default newTaskSlice.reducer;

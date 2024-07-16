@@ -45,7 +45,7 @@ function App() {
   }, [dispatch]);
 
   if (status === Status.LOADING) return (<div>Loading...</div>);
-  if (status === Status.FAILED) return (<div>Failed...</div>);
+  if (status === Status.FAILED) return (<ErrorPage />);
 
   return (
     <RouterProvider router={router} />
