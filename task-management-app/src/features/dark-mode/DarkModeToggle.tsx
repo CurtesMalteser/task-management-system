@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ReactComponent as Sun } from '../../assets/svg/sun.svg';
 import { ReactComponent as Moon } from '../../assets/svg/moon.svg';
 import { ReactComponent as Auto } from '../../assets/svg/dark-light.svg';
