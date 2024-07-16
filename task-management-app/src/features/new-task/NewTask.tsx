@@ -16,6 +16,7 @@ import {
 import { storeTask } from '../tasks-list/tasksSlice';
 import { Status } from '../../constants/Status';
 import TaskForm from './components/TaskForm';
+import LoadingScreen from '../loader/LoadingScreen';
 
 function NewTask() {
 
@@ -50,7 +51,7 @@ function NewTask() {
         });
     };
 
-    if (status === Status.LOADING) return (<div>Loading...</div>);
+    if (status === Status.LOADING) return (<LoadingScreen />);
 
     return (
         <Container className="md-8">

@@ -19,6 +19,7 @@ import NewTask from '../features/new-task/NewTask';
 import DashboardPage from '../features/dashboard/DashboardPage';
 import { Status } from '../constants/Status';
 import TaskDetailsPage from '../features/details/TaskDetailsPage';
+import LoadingScreen from '../features/loader/LoadingScreen';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,7 @@ function App() {
     dispatch(fetchTasksAsync());
   }, [dispatch]);
 
-  if (status === Status.LOADING) return (<div>Loading...</div>);
+  if (status === Status.LOADING) return (<LoadingScreen />);
   if (status === Status.FAILED) return (<ErrorPage />);
 
   return (

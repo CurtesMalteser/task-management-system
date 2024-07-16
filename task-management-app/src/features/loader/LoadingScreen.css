@@ -1,0 +1,12 @@
+.loading-screen-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.loading-screen-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

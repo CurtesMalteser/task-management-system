@@ -31,6 +31,7 @@ import TaskForm from '../new-task/components/TaskForm';
 import ErrorPage from '../error/ErrorPage';
 import { Alert } from 'react-bootstrap';
 import { unwrapResult } from '@reduxjs/toolkit';
+import LoadingScreen from '../loader/LoadingScreen';
 
 interface TaskDetailsHook {
     showModal: boolean;
@@ -135,7 +136,7 @@ function TaskDetailsPage() {
         updatedTask && updateTask(updatedTask)
     };
 
-    if (status === Status.LOADING) return <div>Loading...</div>;
+    if (status === Status.LOADING) return (<LoadingScreen />);
     if (status === Status.FAILED && errorType === ErrorType.FETCHING) return (<ErrorPage />);
 
     return (
