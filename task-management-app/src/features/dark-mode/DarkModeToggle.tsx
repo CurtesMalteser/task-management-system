@@ -21,7 +21,7 @@ function TitleSelection(selectedMode: string) {
     }
 }
 
-function DarkModeToggle() {
+function DarkModeToggle({className}: {className?: string}) {
     const dispatch = useAppDispatch();
     const isDarkMode = useAppSelector(darkModeSelector)
 
@@ -37,7 +37,7 @@ function DarkModeToggle() {
         <DropdownButton
             key={isDarkMode}
             id={`dropdown-split-variants-${isDarkMode}`}
-            className='dark-mode-dropdown'
+            className={`dark-mode-dropdown ${className}`}
             title={ TitleSelection(isDarkMode) }
             onSelect={(e) => setPreferredTheme(e ?? 'auto')}
         >

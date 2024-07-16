@@ -10,15 +10,18 @@ function AppNavBar() {
         <Navbar expand="lg" className="navbar-dark bg-primary" style={{ marginBottom: "48px" }}>
             <Container>
                 <Navbar.Brand as={Link} to={ROUTES.HOME}>Employee Polls</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <div className="d-flex align-items-center">
+                    <DarkModeToggle className="d-lg-none me-2"/>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                </div>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to={ROUTES.HOME}>Home</Nav.Link>
                         <Nav.Link as={Link} to={ROUTES.DASHBOARD}>Dashboard</Nav.Link>
                         <Nav.Link as={Link} to={ROUTES.NEW_TASK}>New</Nav.Link>
                     </Nav>
+                    <DarkModeToggle className="d-none d-lg-block"/>
                 </Navbar.Collapse>
-                <DarkModeToggle />
             </Container>
         </Navbar>
     );
