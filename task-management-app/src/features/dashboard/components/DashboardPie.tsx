@@ -52,7 +52,7 @@ function DashboardPie({ data, title, header }: ChartProps) {
         }
 
         return () => window.removeEventListener('resize', handleResize);
-    }, [scriptLoaded, isDarkMode]);
+    });
 
     const drawChart = () => {
         const google = (window as any).google;
