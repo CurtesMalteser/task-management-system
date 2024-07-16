@@ -7,16 +7,17 @@
 
 // 2. Include any default variable overrides here
 $dark: rgb(4, 11, 120);
+$danger: #DC143C;
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
-//@import "../node_modules/bootstrap/scss/variables";
-//@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
 
 // 4. Include any default map overrides here
 
 // 5. Include remainder of required parts
 //@import "../node_modules/bootstrap/scss/maps";
-//@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/mixins";
 //@import "../node_modules/bootstrap/scss/root";
 
 // 6. Optionally include any other parts as needed
@@ -36,7 +37,10 @@ $dark: rgb(4, 11, 120);
 
 // 8. Add additional custom code here
 
-// fixMe: Importing everything, but should be more selective,
-// moving forward with the project
 // Import Bootstrap's source files
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.card {
+    border: 3px solid var(--bs-primary);
+    border-radius: 8px;
+}
