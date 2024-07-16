@@ -8,9 +8,11 @@ export interface DarkModeToggleItemProps {
     selectedMode: string;
 }
 
-export default function DarkModeToggleItem({ Icon, mode, selectedMode}: DarkModeToggleItemProps) {
-    return (<Dropdown.Item active={mode === selectedMode} eventKey={mode}>
-        <Icon className={`color-mode dark-mode-toggle`} /> {mode}
+export default function DarkModeToggleItem({ Icon, mode, selectedMode }: DarkModeToggleItemProps) {
+    const isSelected = mode === selectedMode;
+    const className = isSelected ? 'icon-size dark-mode-toggle-selected' : 'icon-size  dark-mode-toggle'
+    return (<Dropdown.Item active={isSelected} eventKey={mode}>
+        <Icon className={className} /> {mode}
     </Dropdown.Item>
     )
 }

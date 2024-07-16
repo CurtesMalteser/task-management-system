@@ -11,11 +11,11 @@ const prefersDarkMode = () => window.matchMedia('(prefers-color-scheme: dark)').
 function TitleSelection(selectedMode: string) {
     switch (selectedMode) {
         case 'light':
-            return <Sun className='color-mode' /> 
+            return <Sun className='icon-size' /> 
         case 'dark':
-            return <Moon className='color-mode' /> 
+            return <Moon className='icon-size' /> 
         default:
-            return <Auto className='color-mode' /> 
+            return <Auto className='icon-size' /> 
     }
 }
 
@@ -36,7 +36,7 @@ function DarkModeToggle() {
         <DropdownButton
             key={isDarkMode}
             id={`dropdown-split-variants-${isDarkMode}`}
-            variant={isDarkMode}
+            className='dark-mode-dropdown'
             title={ TitleSelection(isDarkMode) }
             onSelect={(e) => setPreferredTheme(e ?? 'auto')}
         >
