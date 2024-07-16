@@ -78,7 +78,7 @@ const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
                 .then(unwrapResult)
                 .then(() => dispatch(removeTask(id)))
                 .then(() => navigate(ROUTES.HOME, { replace: true }))
-                .catch((_error) => handleClose())
+                .catch((error) => console.error(`❌ Unable to delete the task: ${error}`))
                 .finally(() => handleClose());
         }
     }

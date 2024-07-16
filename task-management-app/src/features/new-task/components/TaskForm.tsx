@@ -45,13 +45,13 @@ function TaskForm({
                 onChange={setDescription}
             />
             <Row className='mb-3'>
-                <Col>
+                <Col xs={12} md={4} className="mb-3 mb-md-0">
                     <PriorityFormSelect
                         value={priority}
                         onChange={setPriority}
                     />
                 </Col>
-                <Col>
+                <Col xs={12} md={8}>
                     <TaskDatePicker
                         selected={dueDate}
                         handleDateChange={setDueDate}
@@ -63,8 +63,8 @@ function TaskForm({
                     type="submit"
                     variant="primary"
                     value="Save"
+                    className='me-2'
                 />
-                {' '} {/* Add a space between the buttons */}
                 <Button
                     as="input"
                     type="button"
