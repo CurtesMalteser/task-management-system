@@ -1,20 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 import {
-    deleteTaskAsync,
-    fetchTaskAsync,
     statusSelector,
     taskSelector,
-    updateTaskAsync,
     modeSelector,
     Mode,
-    setMode as setModeAction,
     errorSelector,
     ErrorType,
-    resetError,
 } from './taskDetailsSlice';
-import { removeTask, storeTask } from '../tasks-list/tasksSlice';
 import { Priority, Task, Status as TaskStatus } from "task-management-lib/lib/task";
 import { Status } from '../../constants/Status';
 import Container from 'react-bootstrap/esm/Container';
@@ -26,77 +19,13 @@ import { PriorityIcon, StatusBadge } from '../../utils/icons';
 import formatDate, { isOverdueDate } from '../../utils/date';
 import Row from 'react-bootstrap/esm/Row';
 import DeleteTaskModal from './components/DeleteTaskModal';
-import ROUTES from '../../constants/routes';
 import TaskForm from '../new-task/components/TaskForm';
 import ErrorPage from '../error/ErrorPage';
 import { Alert } from 'react-bootstrap';
-import { unwrapResult } from '@reduxjs/toolkit';
 import LoadingScreen from '../loader/LoadingScreen';
+import { TaskDetailsHook, useTaskDetails } from './hooks/useTaskDetails';
 
-interface TaskDetailsHook {
-    showModal: boolean;
-    setShowModal: (show: boolean) => void;
-    updatedTask: Task | null;
-    setUpdatedTask: (task: Task) => void;
-    updateTask: (task: Task) => void;
-    deleteTask: (handleClose: () => void) => void;
-    setMode: (mode: Mode) => void;
-    dispatchResetError: () => void;
-}
 
-const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
-
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate()
-
-    const [show, setShow] = useState(false);
-    const [updatedTask, setUpdatedTask] = useState<Task | null>(null);
-
-    useEffect(() => {
-        if (id) {
-            dispatch(fetchTaskAsync(id));
-        }
-    }, [dispatch, id]);
-
-    const setMode = (mode: Mode) => {
-        dispatch(setModeAction(mode));
-    };
-
-    const updateTask = (task: Task) => {
-        dispatch(updateTaskAsync(task))
-            .then((response) => {
-                if (response.payload) {
-                    dispatch(storeTask(response.payload));
-                }
-            }).then(() => {
-                setMode(Mode.VIEW);
-            })
-    };
-
-    const deleteTask = (handleClose: () => void) => {
-        if (id) {
-            dispatch(deleteTaskAsync(id))
-                .then(unwrapResult)
-                .then(() => dispatch(removeTask(id)))
-                .then(() => navigate(ROUTES.HOME, { replace: true }))
-                .catch((error) => console.error(`❌ Unable to delete the task: ${error}`))
-                .finally(() => handleClose());
-        }
-    }
-
-    const dispatchResetError = () => dispatch(resetError());
-
-    return {
-        updateTask,
-        deleteTask,
-        showModal: show,
-        setShowModal: setShow,
-        setMode,
-        updatedTask,
-        setUpdatedTask,
-        dispatchResetError,
-    };
-};
 
 function errorMessage(errorType: ErrorType | null): string {
     switch (errorType) {
@@ -107,6 +36,53 @@ function errorMessage(errorType: ErrorType | null): string {
         default:
             return 'Error: Unable to perform the operation. Please try again.';
     }
+}
+
+function TaskDetailsCard({ task, updateTask, setMode, setShow }: { task: Task, updateTask: (task: Task) => void, setMode: (mode: Mode) => void, setShow: () => void }) {
+    return (<Card className="task-item-description mt-2">
+        <Card.Body>
+            <Row className="task-item-header align-items-center">
+                <Col xs={12} className="d-flex justify-content-between align-items-center">
+                    <Card.Title className="task-title">
+                        <h5 className="d-inline">{task.title} {PriorityIcon(task.priority)} {StatusBadge(task.status)}</h5>
+                    </Card.Title>
+                </Col>
+            </Row>
+            <Card.Text>{task.description}</Card.Text>
+
+            <Card.Text className={`task-item-date mt-2 mb-0 ${isOverdueDate(task.dueDate) ? 'overdue' : ''}`}>Due Date: {formatDate(task.dueDate)}</Card.Text>
+            <Card.Text className="task-item-creation-date mt-2 mb-0">Created On: {formatDate(task.creationDate)}</Card.Text>
+
+            <Row className="mt-3 align-items-center">
+                <Col className="d-flex">
+                    <Dropdown >
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            Change Status
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => updateTask({
+                                ...task,
+                                status: TaskStatus.OPEN,
+                            })}>Open</Dropdown.Item>
+                            <Dropdown.Item onClick={() => updateTask({
+                                ...task,
+                                status: TaskStatus.IN_PROGRESS
+                            })}>In Progress</Dropdown.Item>
+                            <Dropdown.Item onClick={() => updateTask({
+                                ...task,
+                                status: TaskStatus.COMPLETED
+                            })}>Completed</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Col>
+                <Col className="task-actions d-flex justify-content-end">
+                    <Button variant="outline-primary me-1" onClick={() => setMode(Mode.EDIT)}>Edit</Button>
+                    <Button variant="outline-danger" onClick={setShow}>Delete</Button>
+                </Col>
+            </Row>
+        </Card.Body>
+    </Card>
+    );
 }
 
 function TaskDetailsPage() {
@@ -151,35 +127,35 @@ function TaskDetailsPage() {
                 {errorMessage(errorType)}
             </Alert>
             <h1 className='mb-3'>Task</h1>
-            {(mode === Mode.EDIT) 
-            && task
-            && (<TaskForm
-                title={(updatedTask ?? task).title}
-                setTitle={(title: string) => setUpdatedTask({
-                    ...(updatedTask ?? task),
-                    title
-                })}
-                description={(updatedTask ?? task).description}
-                setDescription={(description: string) => setUpdatedTask({
-                    ...(updatedTask ?? task),
-                    description
-                })}
-                priority={(updatedTask ?? task).priority}
-                setPriority={(priority: Priority) => setUpdatedTask({
-                    ...(updatedTask ?? task),
-                    priority
-                })}
-                dueDate={new Date((updatedTask ?? task).dueDate)}
-                setDueDate={(date: Date | null) => {
-                    setUpdatedTask({
+            {(mode === Mode.EDIT)
+                && task
+                && (<TaskForm
+                    title={(updatedTask ?? task).title}
+                    setTitle={(title: string) => setUpdatedTask({
                         ...(updatedTask ?? task),
-                        dueDate: date?.getTime() ?? 0
-                    })
-                }}
-                handleSubmit={handleSubmit}
-                handleCancel={() => setMode(Mode.VIEW)}
+                        title
+                    })}
+                    description={(updatedTask ?? task).description}
+                    setDescription={(description: string) => setUpdatedTask({
+                        ...(updatedTask ?? task),
+                        description
+                    })}
+                    priority={(updatedTask ?? task).priority}
+                    setPriority={(priority: Priority) => setUpdatedTask({
+                        ...(updatedTask ?? task),
+                        priority
+                    })}
+                    dueDate={new Date((updatedTask ?? task).dueDate)}
+                    setDueDate={(date: Date | null) => {
+                        setUpdatedTask({
+                            ...(updatedTask ?? task),
+                            dueDate: date?.getTime() ?? 0
+                        })
+                    }}
+                    handleSubmit={handleSubmit}
+                    handleCancel={() => setMode(Mode.VIEW)}
 
-            />)}
+                />)}
             {(mode === Mode.VIEW) && task &&
                 <>
                     <DeleteTaskModal
@@ -188,49 +164,7 @@ function TaskDetailsPage() {
                         handleClose={handleClose}
                         handleDelete={() => deleteTask(handleClose)}
                     />
-                    <Card className="task-item-description mt-2">
-                        <Card.Body>
-                            <Row className="task-item-header align-items-center">
-                                <Col xs={12} className="d-flex justify-content-between align-items-center">
-                                    <Card.Title className="task-title">
-                                        <h5 className="d-inline">{task.title} {PriorityIcon(task.priority)} {StatusBadge(task.status)}</h5>
-                                    </Card.Title>
-                                </Col>
-                            </Row>
-                            <Card.Text>{task.description}</Card.Text>
-
-                            <Card.Text className={`task-item-date mt-2 mb-0 ${isOverdueDate(task.dueDate) ? 'overdue' : ''}`}>Due Date: {formatDate(task.dueDate)}</Card.Text>
-                            <Card.Text className="task-item-creation-date mt-2 mb-0">Created On: {formatDate(task.creationDate)}</Card.Text>
-
-                            <Row className="mt-3 align-items-center">
-                                <Col className="d-flex">
-                                    <Dropdown >
-                                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                                            Change Status
-                                        </Dropdown.Toggle>
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item onClick={() => updateTask({
-                                                ...task,
-                                                status: TaskStatus.OPEN,
-                                            })}>Open</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => updateTask({
-                                                ...task,
-                                                status: TaskStatus.IN_PROGRESS
-                                            })}>In Progress</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => updateTask({
-                                                ...task,
-                                                status: TaskStatus.COMPLETED
-                                            })}>Completed</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                </Col>
-                                <Col className="task-actions d-flex justify-content-end">
-                                    <Button variant="outline-primary me-1" onClick={() => setMode(Mode.EDIT)}>Edit</Button>
-                                    <Button variant="outline-danger" onClick={() => setShow(true)}>Delete</Button>
-                                </Col>
-                            </Row>
-                        </Card.Body>
-                    </Card>
+                    <TaskDetailsCard task={task} updateTask={updateTask} setMode={setMode} setShow={() => setShow(true)} />
                 </>
             }
         </Container>
