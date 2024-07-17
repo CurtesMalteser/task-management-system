@@ -164,3 +164,6 @@ This project is a Task Management System that enables users to manage their task
    The server will run on `http://localhost:3000`.
 
 6. Open a web browser and navigate to [http://localhost:3000](http://localhost:3000) to view the application.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
