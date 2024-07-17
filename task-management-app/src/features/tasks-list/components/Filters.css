@@ -15,3 +15,25 @@
 .filter-style path {
     fill: light-dark(var(--bs-body-color), var(--bs-white));
 }
+
+.filter-navbar .input-group.form-control {
+    padding: 0;
+    border: .5px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+
+.filter-navbar .input-group .form-control {
+    border: transparent;
+}
+
+.filter-navbar .clear-search {
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+    color: var(--bs-secondary-color);
+}
+
+
+.filter-navbar .clear-search:hover {
+    background-color: var(--bs-link-hover-color);
+}

@@ -5,6 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/esm/InputGroup';
 import {
     setFilterTasksByStatus,
     setSortTasks,
@@ -94,14 +95,16 @@ const Filters = () => {
                     <Form onSubmit={handleSubmit}
                         className="d-flex mt-3 mt-lg-0 ms-auto mb-3 mb-lg-0"
                     >
-                        <Form.Control
-                            id='search'
-                            type="text"
-                            placeholder="Search"
-                            className="me-2"
-                            value={search}
-                            onChange={(e) => dispatchSearchTask(e.target.value)}
-                        />
+                        <InputGroup className="me-2 form-control">
+                            <Form.Control
+                                id='search'
+                                type="text"
+                                placeholder="Search"
+                                value={search}
+                                onChange={(e) => dispatchSearchTask(e.target.value)}
+                            />
+                            <Button className='clear-search' onClick={() => dispatchSearchTask("")}>X</Button>
+                        </InputGroup>
                         <Button type="submit">Search</Button>
                     </Form>
                 </Navbar.Collapse>
