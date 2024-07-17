@@ -8,6 +8,7 @@ import TitleFormGroup from './TitleFormGroup';
 import DescriptionFormGroup from './DescriptionFormGroup';
 import PriorityFormSelect from './PriorityFormSelect';
 import TaskDatePicker from './TaskDatePicker';
+import './TaskForm.css';
 
 export interface TaskFormProps {
     title: string;
@@ -35,7 +36,7 @@ function TaskForm({
     handleCancel,
 }: TaskFormProps) {
     return (
-        <Form onSubmit={handleSubmit} >
+        <Form className="task-form" onSubmit={handleSubmit} >
             <TitleFormGroup
                 value={title}
                 onChange={setTitle}
