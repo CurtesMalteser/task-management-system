@@ -99,7 +99,11 @@ function TaskDetailsPage() {
                         })
                     }}
                     handleSubmit={handleSubmit}
-                    handleCancel={() => setMode(Mode.VIEW)}
+                    handleCancel={() => {
+                        // Reset the updated task to the original task
+                        setUpdatedTask(task);
+                        setMode(Mode.VIEW);
+                    }}
 
                 />)}
             {(mode === Mode.VIEW) && task &&

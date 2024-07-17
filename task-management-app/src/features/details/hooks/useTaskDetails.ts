@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
     deleteTaskAsync,
     fetchTaskAsync,
@@ -39,9 +39,17 @@ export const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
         }
     }, [dispatch, id]);
 
-    const setMode = (mode: Mode) => {
+    const setMode = useCallback((mode: Mode) => {
         dispatch(setModeAction(mode));
-    };
+    }, [dispatch]);
+
+    // Reset the mode when the component is unmounted
+    useEffect(() => {
+          return () => {
+            setMode(Mode.VIEW);
+        }
+    }, [setMode]);
+
 
     const updateTask = (task: Task) => {
         dispatch(updateTaskAsync(task))
