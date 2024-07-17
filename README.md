@@ -41,6 +41,10 @@ This project is a Task Management System that enables users to manage their task
    ```bash
    cd task-management-system
    ```
+3. **Note:** Depending on your system's configuration, you might need to run the above command with **sudo** to install dependencies.
+   ```bash
+   sudo npm <replace with command>
+   ```
 
 ### Library Installation Steps (task-management-lib)
 
@@ -96,7 +100,7 @@ This project is a Task Management System that enables users to manage their task
 3. Verify dependency version is correct:
    - Open the `package.json` file located in your project's root directory.
    - Look for the `task-management-lib` entry under `dependencies`.
-   - Ensure that the version number matches the expected version (e.g., `"file:../task-management-lib/task-management-lib-0.0.2.tgz"`).
+   - Ensure that the version number matches the expected version (e.g., `"file:../task-management-lib/task-management-lib-0.0.3.tgz"`).
 
 4. Install library:
    ```bash
@@ -145,7 +149,7 @@ This project is a Task Management System that enables users to manage their task
 3. Verify dependency version is correct:
    - Open the `package.json` file located in your project's root directory.
    - Look for the `task-management-lib` entry under `dependencies`.
-   - Ensure that the version number matches the expected version (e.g., `"file:../task-management-lib/task-management-lib-0.0.2.tgz"`).
+   - Ensure that the version number matches the expected version (e.g., `"file:../task-management-lib/task-management-lib-0.0.3.tgz"`).
 
 4. Install library:
    ```bash
