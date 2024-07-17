@@ -25,6 +25,31 @@ export interface TaskDetailsHook {
     dispatchResetError: () => void;
 }
 
+/**
+ * Custom hook to manage the task details page.
+ * 
+ * This hook is responsible for fetching the task details, updating, and deleting the task.
+ * It separates the logic from the component to provide cleaner and more readable code,
+ * especially for the TaskDetailsPage component which handles both edit and view modes,
+ * as well as error messages. This promotes separation of concerns, making the component
+ * more focused on rendering the UI.
+ * 
+ * On unmount, the mode is reset to view mode.
+ * 
+ * @param {string | undefined} id - The ID of the task to fetch. If undefined, no fetch is performed.
+ * @returns {TaskDetailsHook} An object containing:
+ * - `showModal`: Boolean to show or hide the modal.
+ * - `setShowModal`: Function to set the modal visibility.
+ * - `updatedTask`: The updated task synched with the form changes.
+ * - `setUpdatedTask`: Function to set the updated task.
+ * - `updateTask`: Function to update the task.
+ * - `deleteTask`: Function to delete the task, takes a callback to close the modal or component.
+ * - `setMode`: Function to set the current mode (view or edit).
+ * - `dispatchResetError`: Function to reset any error states.
+ * 
+ * @example
+ * const { showModal, setShowModal, updatedTask, setUpdatedTask, updateTask, deleteTask, setMode, dispatchResetError } = useTaskDetails(id);
+ */
 export const useTaskDetails = (id: string | undefined): TaskDetailsHook => {
 
     const dispatch = useAppDispatch();

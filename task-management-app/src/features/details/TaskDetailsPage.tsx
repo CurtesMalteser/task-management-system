@@ -73,6 +73,7 @@ function TaskDetailsPage() {
                 {errorMessage(errorType)}
             </Alert>
             <h1 className='mb-3'>Task</h1>
+
             {(mode === Mode.EDIT)
                 && task
                 && (<TaskForm
@@ -104,8 +105,8 @@ function TaskDetailsPage() {
                         setUpdatedTask(task);
                         setMode(Mode.VIEW);
                     }}
-
                 />)}
+
             {(mode === Mode.VIEW) && task &&
                 <>
                     <DeleteTaskModal
