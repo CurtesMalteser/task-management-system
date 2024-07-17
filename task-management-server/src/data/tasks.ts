@@ -6,7 +6,7 @@ import {
     TaskRequest,
 } from 'task-management-lib/lib/task';
 
-const tasks: { [key: string]: Task } = {
+ const tasks: { [key: string]: Task } = {
     1: {
         id: '1',
         title: 'Task 1',
@@ -86,7 +86,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Implement search functionality. The user should be able to search for tasks by title or description. The search should be case-insensitive and should return all tasks that contain the search term. The search results should be displayed on the list. The search should be triggered by the user typing in the search box. The search bar is displayed at the top of the list next to the filter dropdown.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.IN_PROGRESS
+        status: Status.COMPLETED
     },
     10: {
         id: '10',
@@ -95,7 +95,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Fix edit task by seeting the current task with useState hook when it\'s lodaded, and update the task without modifing the values should work correctly.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.OPEN
+        status: Status.COMPLETED
     },
     11: {
         id: '11',
@@ -104,7 +104,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Implement No tasks message when there are no tasks to display. The message should be displayed in the center of the list.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.OPEN
+        status: Status.COMPLETED
     },
     12: {
         id: '12',
@@ -113,7 +113,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Implement error handling. Mock endpoint should return an error response. The UI should display an error message when the request fails.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.OPEN
+        status: Status.COMPLETED
     },
     13: {
         id: '13',
@@ -122,7 +122,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Implement loading state. The UI should display a loading spinner when the request is in progress.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.OPEN
+        status: Status.COMPLETED
     },
     14: {
         id: '14',
@@ -131,7 +131,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Extensive testing should be done to ensure the application works as expected. The application should be tested on different devices and browsers. The application should be tested with different screen sizes. The application should be tested with different network speeds.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.OPEN
+        status: Status.COMPLETED
     },
     15: {
         id: '15',
@@ -140,7 +140,7 @@ const tasks: { [key: string]: Task } = {
         description: 'Implemt override bootstrap styles to match the design. The application should look like the design provided. The application should be responsive and should look good on all screen sizes.',
         priority: Priority.HIGH,
         dueDate: 1721088000000,
-        status: Status.OPEN
+        status: Status.COMPLETED
     },
 }
 

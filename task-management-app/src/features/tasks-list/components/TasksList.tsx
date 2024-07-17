@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
+import NoTasksFoundCard from "./NoTasksFoundCard";
 
 function TasksList() {
 
@@ -35,6 +36,7 @@ function TasksList() {
     return (
         <>
             <Filters />
+            {tasks.length === 0 && <NoTasksFoundCard />}
             {tasks.map((task) => (
                 isSmallScreen ? (
                     (<TaskCard

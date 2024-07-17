@@ -41,8 +41,6 @@ const initialState: TasksState = {
     search: '',
 };
 
-// If there's time don't fetch if the data is already in the store
-// Think about force fetch to get the latest data
 export const fetchTasksAsync = createAsyncThunk(
     'tasks/fetchTasks',
     async () => {
