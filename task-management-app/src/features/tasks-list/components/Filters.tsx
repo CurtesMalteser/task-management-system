@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -45,17 +45,26 @@ const sortTasksToString = (sort: Sort) => {
 // #endregion utils
 
 const Filters = () => {
+
+    const [expanded, setExpanded] = useState(false);
+
     const dispatch = useAppDispatch();
     const filterBy = useAppSelector(taskStatusFilterSelector);
     const sortBy = useAppSelector(sortSelector);
     const search = useAppSelector(searchSelector);
 
+    const closeOnSmallScreen = () => {
+        if (window.innerWidth <= 768) setExpanded(false);
+    };
+
     const handleFilterSelect = (status: TaskStatus | null) => {
         dispatch(setFilterTasksByStatus(status));
+        closeOnSmallScreen();
     };
 
     const handleSortSelect = (sort: Sort) => {
         dispatch(setSortTasks(sort));
+        closeOnSmallScreen();
     };
 
     const dispatchSearchTask = (search: string) => {
@@ -68,7 +77,7 @@ const Filters = () => {
     }
 
     return (
-        <Navbar expand="lg" className='mb-3 filter-navbar'>
+        <Navbar expand="lg" className='mb-3 filter-navbar' expanded={expanded} onToggle={setExpanded}>
             <Container fluid>
                 <Navbar.Toggle aria-controls="navbarScroll">
                     <Filter className="filter-size filter-style" />
@@ -103,7 +112,13 @@ const Filters = () => {
                                 value={search}
                                 onChange={(e) => dispatchSearchTask(e.target.value)}
                             />
-                            <Button className='clear-search' onClick={() => dispatchSearchTask("")}>X</Button>
+                            <Button className='clear-search' onClick={() => {
+                                if (search.trim() !== '') {
+                                    dispatchSearchTask("")
+                                } else {
+                                    setExpanded(false);
+                                }
+                            }}>X</Button>
                         </InputGroup>
                         <Button type="submit">Search</Button>
                     </Form>

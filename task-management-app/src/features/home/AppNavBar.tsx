@@ -8,7 +8,7 @@ import DarkModeToggle from '../../features/dark-mode/DarkModeToggle';
 
 function AppNavBar() {
 
-    const [expanded, setExpanded] = useState(false); 
+    const [expanded, setExpanded] = useState(false);
 
     return (
         <Navbar expand="lg" className="navbar-dark bg-primary" style={{ marginBottom: "48px" }} expanded={expanded} onToggle={setExpanded}>
