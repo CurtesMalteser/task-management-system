@@ -5,7 +5,7 @@
 }
 
 .task-item:hover {
-    box-shadow: 0 4px 8px light-dark(rgba(var(--bs-dark-rgb), 0.3), rgba(var(--bs-primary-rgb), 0.4));
+    box-shadow: 0 4px 8px light-dark(rgba(var(--bs-dark-rgb), 0.4), rgba(var(--bs-primary-rgb), 0.5));
 }
 
 .task-item-header {

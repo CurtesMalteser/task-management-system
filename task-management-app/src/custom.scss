@@ -8,6 +8,7 @@
 // 2. Include any default variable overrides here
 $dark: rgb(4, 11, 120);
 $danger: #DC143C;
+$light: #eceff6;
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../node_modules/bootstrap/scss/variables";
@@ -43,4 +44,6 @@ $danger: #DC143C;
 .card {
     border: 3px solid var(--bs-primary);
     border-radius: 24px;
+    background-color: light-dark(var(--bs-light), var(--bs-dark));
+    padding: 1rem;
 }
