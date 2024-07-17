@@ -20,6 +20,15 @@ import { TaskDetailsHook, useTaskDetails } from './hooks/useTaskDetails';
 import TaskDetailsCard from './components/TaskDetailsCard';
 
 
+/**
+ * Error message based on the error type.
+ * Used to display the error message in the Alert component.
+ * ErrorType.FETCHING: intentionally ommit, the error is handled by showing ErrorPage.
+ * 
+ * @param {ErrorType | null} errorType - The error type.
+ * 
+ * @returns {string} The error message.
+ */
 function errorMessage(errorType: ErrorType | null): string {
     switch (errorType) {
         case ErrorType.UPDATING:
@@ -31,7 +40,21 @@ function errorMessage(errorType: ErrorType | null): string {
     }
 }
 
-function TaskDetailsPage() {
+/**
+ * Task details page component.
+ * 
+ * This component is responsible for rendering the task details page.
+ * It handles both view and edit modes, as well as error messages.
+ * 
+ * The TaskDetailsCard component is used to render the task details in view mode.
+ * The TaskForm component is used to render the form in edit mode.
+ * The DeleteTaskModal component is used to render the delete task modal.
+ * The id is extracted from the URL using the useParams hook.
+ * The useTaskDetails custom hook is used to manage the task details page.
+ * 
+ * @returns {JSX.Element} The task details page.
+ */
+function TaskDetailsPage(): JSX.Element {
 
     const { id } = useParams<{ id: string }>();
 
