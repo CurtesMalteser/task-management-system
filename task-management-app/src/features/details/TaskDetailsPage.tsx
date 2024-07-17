@@ -133,7 +133,8 @@ function TaskDetailsPage() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        updatedTask && updateTask(updatedTask)
+        const sumbmitTask = updatedTask ?? task;
+        sumbmitTask && updateTask(sumbmitTask)
     };
 
     if (status === Status.LOADING) return (<LoadingScreen />);
@@ -150,7 +151,9 @@ function TaskDetailsPage() {
                 {errorMessage(errorType)}
             </Alert>
             <h1 className='mb-3'>Task</h1>
-            {(mode === Mode.EDIT) && task && <TaskForm
+            {(mode === Mode.EDIT) 
+            && task
+            && (<TaskForm
                 title={(updatedTask ?? task).title}
                 setTitle={(title: string) => setUpdatedTask({
                     ...(updatedTask ?? task),
@@ -176,7 +179,7 @@ function TaskDetailsPage() {
                 handleSubmit={handleSubmit}
                 handleCancel={() => setMode(Mode.VIEW)}
 
-            />}
+            />)}
             {(mode === Mode.VIEW) && task &&
                 <>
                     <DeleteTaskModal
